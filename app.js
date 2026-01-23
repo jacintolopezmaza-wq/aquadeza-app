@@ -240,16 +240,30 @@ const App = {
 
         // Metadata Inline Controls
         let html = `
-            <div class="sheet-header-title">DIARIO DE LA OPERACION DE LA E.D.A.R. DE BOTOS-LALÍN (Pontevedra)</div>
-            <div class="monthly-controls">
-                <div class="control-item">AÑO: 
-                    <select id="year-select" >${[2024, 2025, 2026].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}</select>
+            <div class="premium-header">
+                <div class="header-row">
+                    <div class="header-brand">
+                        <span class="brand-name">AQUADEZA</span>
+                        <span class="brand-tagline">SERVICIO DE LALÍN</span>
+                    </div>
+                    <div class="header-station-box">
+                        <h1 class="station-title">EDAR DE BOTOS</h1>
+                        <div class="sheet-info-badge">${this.currentBotosTab.toUpperCase()}</div>
+                    </div>
                 </div>
-                <div class="control-item">MES: 
-                    <select id="month-select">${months.map((m, i) => `<option value="${i}" ${i === this.currentMonth ? 'selected' : ''}>${m}</option>`).join('')}</select>
-                </div>
-                <div class="control-item" style="grid-column: span 10; border-right:none;"></div>
-                <div class="control-item" style="grid-column: span 2; border-right:none; display:flex; justify-content:flex-end; padding-right:10px;">
+                <div class="header-controls-row">
+                    <div class="control-pill">
+                        <label>MES</label>
+                        <select id="month-select">
+                            ${months.map((m, i) => `<option value="${i}" ${i === this.currentMonth ? 'selected' : ''}>${m}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="control-pill">
+                        <label>AÑO</label>
+                        <select id="year-select">
+                            ${[2024, 2025, 2026].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
+                        </select>
+                    </div>
                 </div>
             </div>
             
@@ -300,19 +314,30 @@ const App = {
         const months = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
 
         let html = `
-            <div class="sheet-header">
-                <div class="header-main">
-                    <div class="logo">AQUADEZA</div>
-                    <div class="title-container">
-                        <h2>SERVICIO DE LALÍN</h2>
-                        <p>BOMBEO DE BOTOS</p>
+            <div class="premium-header">
+                <div class="header-row">
+                    <div class="header-brand">
+                        <span class="brand-name">AQUADEZA</span>
+                        <span class="brand-tagline">SERVICIO DE LALÍN</span>
                     </div>
-                    <div class="meta">HOJA: ${this.currentBombeoBotosTab === 'hoja1' ? '1' : '2'}</div>
+                    <div class="header-station-box">
+                        <h1 class="station-title">BOMBEO DE BOTOS</h1>
+                        <div class="sheet-info-badge">HOJA: ${this.currentBombeoBotosTab === 'hoja1' ? '1' : '2'}</div>
+                    </div>
                 </div>
-                <div class="date-selects" style="text-align: center; font-weight: bold; font-size: 0.8rem; margin-top: 5px;">
-                    MES / AÑO: 
-                    <select id="month-select">${months.map((m, i) => `<option value="${i}" ${i === this.currentMonth ? 'selected' : ''}>${m}</option>`).join('')}</select> /
-                    <select id="year-select">${[2024, 2025, 2026].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}</select>
+                <div class="header-controls-row">
+                    <div class="control-pill">
+                        <label>MES</label>
+                        <select id="month-select">
+                            ${months.map((m, i) => `<option value="${i}" ${i === this.currentMonth ? 'selected' : ''}>${m}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="control-pill">
+                        <label>AÑO</label>
+                        <select id="year-select">
+                            ${[2024, 2025, 2026].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -462,19 +487,30 @@ const App = {
         const months = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
 
         let html = `
-            <div class="sheet-header">
-                <div class="header-main">
-                    <div class="logo">AQUADEZA</div>
-                    <div class="title-container">
-                        <h2>SERVICIO DE LALÍN</h2>
-                        <p>BOMBEO DE CATASOS</p>
+            <div class="premium-header">
+                <div class="header-row">
+                    <div class="header-brand">
+                        <span class="brand-name">AQUADEZA</span>
+                        <span class="brand-tagline">SERVICIO DE LALÍN</span>
                     </div>
-                    <div class="meta">HOJA: ${this.currentCatasosTab === 'hoja1' ? '1' : '2'}</div>
+                    <div class="header-station-box">
+                        <h1 class="station-title">BOMBEO DE CATASOS</h1>
+                        <div class="sheet-info-badge">HOJA: ${this.currentCatasosTab === 'hoja1' ? '1' : '2'}</div>
+                    </div>
                 </div>
-                <div class="date-selects" style="text-align: center; font-weight: bold; font-size: 0.8rem; margin-top: 5px;">
-                    MES / AÑO: 
-                    <select id="month-select">${months.map((m, i) => `<option value="${i}" ${i === this.currentMonth ? 'selected' : ''}>${m}</option>`).join('')}</select> /
-                    <select id="year-select">${[2024, 2025, 2026].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}</select>
+                <div class="header-controls-row">
+                    <div class="control-pill">
+                        <label>MES</label>
+                        <select id="month-select">
+                            ${months.map((m, i) => `<option value="${i}" ${i === this.currentMonth ? 'selected' : ''}>${m}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="control-pill">
+                        <label>AÑO</label>
+                        <select id="year-select">
+                            ${[2024, 2025, 2026].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -1261,17 +1297,28 @@ const App = {
         const months = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
 
         let html = `
-            <div class="sheet-header-title">DIARIO DE OPERACION DE LA E.D.A.R. DE LALÍN (Pontevedra)</div>
-            <div class="monthly-controls-top" style="display:flex; justify-content: space-between; padding:10px; background:#f0f0f0; border:1px solid #000; border-bottom:none; font-weight:bold; font-size:0.9rem; align-items:center;">
-                <div style="display:flex; gap:20px; align-items:center;">
-                    <div>AÑO: 
-                        <select id="year-select" style="font-size:0.9rem; padding:2px 5px; border:1px solid #000; border-radius:4px; background:#fff;" >
-                            ${[2024, 2025, 2026].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
+            <div class="premium-header">
+                <div class="header-row">
+                    <div class="header-brand">
+                        <span class="brand-name">AQUADEZA</span>
+                        <span class="brand-tagline">SERVICIO DE LALÍN</span>
+                    </div>
+                    <div class="header-station-box">
+                        <h1 class="station-title">EDAR CORREDOIRA</h1>
+                        <div class="sheet-info-badge">${this.currentCorredoiraTab.toUpperCase()}</div>
+                    </div>
+                </div>
+                <div class="header-controls-row">
+                    <div class="control-pill">
+                        <label>MES</label>
+                        <select id="month-select">
+                            ${months.map((m, i) => `<option value="${i}" ${i === this.currentMonth ? 'selected' : ''}>${m}</option>`).join('')}
                         </select>
                     </div>
-                    <div>MES: 
-                        <select id="month-select" style="font-size:0.9rem; padding:2px 5px; border:1px solid #000; border-radius:4px; background:#fff;" >
-                            ${months.map((m, i) => `<option value="${i}" ${i === this.currentMonth ? 'selected' : ''}>${m}</option>`).join('')}
+                    <div class="control-pill">
+                        <label>AÑO</label>
+                        <select id="year-select">
+                            ${[2024, 2025, 2026].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
                         </select>
                     </div>
                 </div>
@@ -1724,25 +1771,29 @@ const App = {
         const months = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
 
         let html = `
-            <div class="sheet-header">
-                <div class="header-main">
-                    <div class="logo">AQUADEZA</div>
-                    <div class="title-container">
-                        <h2>SERVICIO DE LALIN</h2>
-                        <p>ETAP LALIN - DPTO. ETAP - DPTO. LAGAZOS Y DPTO. LAGAZOS II</p>
+            <div class="premium-header">
+                <div class="header-row">
+                    <div class="header-brand">
+                        <span class="brand-name">AQUADEZA</span>
+                        <span class="brand-tagline">SERVICIO DE LALÍN</span>
                     </div>
-                    <div class="meta">
-                        <div class="date-selects">
-                            MES / AÑO: 
-                            <select id="month-select">
-                                ${months.map((m, i) => `<option value="${i}" ${i === this.currentMonth ? 'selected' : ''}>${m}</option>`).join('')}
-                            </select>
-                            /
-                            <select id="year-select">
-                                ${[2024, 2025, 2026].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
-                            </select>
-                        </div>
-                        <div class="sheet-num">HOJA: ${this.currentEtapTab.replace('hoja', '')}</div>
+                    <div class="header-station-box">
+                        <h1 class="station-title">E.T.A.P.</h1>
+                        <div class="sheet-info-badge">HOJA: ${this.currentEtapTab.replace('hoja', '')}</div>
+                    </div>
+                </div>
+                <div class="header-controls-row">
+                    <div class="control-pill">
+                        <label>MES</label>
+                        <select id="month-select">
+                            ${months.map((m, i) => `<option value="${i}" ${i === this.currentMonth ? 'selected' : ''}>${m}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="control-pill">
+                        <label>AÑO</label>
+                        <select id="year-select">
+                            ${[2024, 2025, 2026].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
+                        </select>
                     </div>
                 </div>
             </div>
@@ -2059,18 +2110,30 @@ const App = {
         const months = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
 
         let html = `
-            <div class="sheet-header">
-                <div class="header-main">
-                    <div class="logo">AQUADEZA</div>
-                    <div class="title-container">
-                        <h2>SERVICIO DE LALÍN</h2>
-                        <p>BOMBEO DE VILATUXE</p>
+            <div class="premium-header">
+                <div class="header-row">
+                    <div class="header-brand">
+                        <span class="brand-name">AQUADEZA</span>
+                        <span class="brand-tagline">SERVICIO DE LALÍN</span>
+                    </div>
+                    <div class="header-station-box">
+                        <h1 class="station-title">BOMBEO DE VILATUXE</h1>
+                        <div class="sheet-info-badge">${this.currentVilatuxeTab.toUpperCase()}</div>
                     </div>
                 </div>
-                <div class="date-selects">
-                    MES / AÑO: 
-                    <select id="month-select">${months.map((m, i) => `<option value="${i}" ${i === this.currentMonth ? 'selected' : ''}>${m}</option>`).join('')}</select> /
-                    <select id="year-select">${[2024, 2025, 2026].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}</select>
+                <div class="header-controls-row">
+                    <div class="control-pill">
+                        <label>MES</label>
+                        <select id="month-select">
+                            ${months.map((m, i) => `<option value="${i}" ${i === this.currentMonth ? 'selected' : ''}>${m}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="control-pill">
+                        <label>AÑO</label>
+                        <select id="year-select">
+                            ${[2024, 2025, 2026].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
+                        </select>
+                    </div>
                 </div>
             </div>
 

@@ -471,16 +471,97 @@ header {
     box-sizing: border-box;
 }
 
-.sheet-header-title {
-    text-align: center;
-    border-bottom: 2px solid #000;
-    padding: 0.2rem;
-    margin-bottom: 0.5rem;
-    color: #000;
-    text-transform: uppercase;
+/* New Professional Header Design */
+.premium-header {
+    background: linear-gradient(135deg, #003087 0%, #0056b3 100%);
+    color: white;
+    padding: 1.5rem 2rem;
+    border-bottom: 4px solid #000;
+}
+
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-brand {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-name {
+    font-size: 2.2rem;
     font-weight: 900;
-    font-size: 1.1rem;
-    letter-spacing: 0.5px;
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 0.2rem;
+}
+
+.brand-tagline {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+.header-station-box {
+    text-align: right;
+}
+
+.station-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.sheet-info-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 5px;
+    backdrop-filter: blur(5px);
+}
+
+.header-controls-row {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.control-pill {
+    display: flex;
+    align-items: center;
+    background: white;
+    color: #333;
+    padding: 5px 15px;
+    border-radius: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.control-pill label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #666;
+    margin-right: 10px;
+}
+
+.control-pill select {
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #003087;
+    background: transparent;
+    cursor: pointer;
+    outline: none;
 }
 
 .monthly-controls {
