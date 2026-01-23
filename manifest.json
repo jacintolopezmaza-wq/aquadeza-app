@@ -1,0 +1,17 @@
+{
+    "name": "AQUADEZA Control Diario",
+    "short_name": "AQUADEZA",
+    "description": "Aplicación de Control Diario para ETAP y EDAR de AQUADEZA",
+    "start_url": "./",
+    "display": "standalone",
+    "background_color": "#0a0a0c",
+    "theme_color": "#03045e",
+    "icons": [
+        {
+            "src": "logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}

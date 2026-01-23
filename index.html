@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Diario - AQUADEZA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#03045e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AQUADEZA">
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="logo.png">
+
+    <!-- Libraries for Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- Views will be injected here -->
+        <div id="login-view" class="view">
+            <div class="login-card">
+                <div class="company-logo">AQUADEZA</div>
+                <h1>Control Diario</h1>
+                <p>Seleccione su nombre para comenzar</p>
+                <div id="employee-selection" class="employee-grid">
+                    <!-- Employees will be injected here -->
+                </div>
+            </div>
+        </div>
+
+        <div id="dashboard-view" class="view" style="display: none;">
+            <header>
+                <div class="header-left">
+                    <h1>AQUADEZA</h1>
+                    <span id="welcome-user">Hola, </span>
+                </div>
+                <button id="logout-btn" class="btn-secondary small">Cerrar Sesión</button>
+            </header>
+
+            <div class="backup-section">
+                <h3>Copia de Seguridad Mensual</h3>
+                <div class="backup-buttons">
+                    <button id="export-excel-btn" class="btn-export excel">
+                        <span class="icon">📊</span> Exportar Excel (.xlsx)
+                    </button>
+                    <button id="export-pdf-btn" class="btn-export pdf">
+                        <span class="icon">📄</span> Exportar PDF (.pdf)
+                    </button>
+                </div>
+            </div>
+
+            <div class="station-grid">
+                <button class="station-card etap" data-station="ETAP">
+                    <span class="icon">💧</span>
+                    <h3>ETAP</h3>
+                </button>
+                <button class="station-card catasos" data-station="CATASOS">
+                    <span class="icon">🔍</span>
+                    <h3>CATASOS</h3>
+                </button>
+                <button class="station-card vilatuxe" data-station="VILATUXE">
+                    <span class="icon">🌲</span>
+                    <h3>VILATUXE</h3>
+                </button>
+                <button class="station-card bombeo-botos" data-station="BOMBEO_BOTOS">
+                    <span class="icon">⚙️</span>
+                    <h3>BOMBEO DE BOTOS</h3>
+                </button>
+                <button class="station-card edar-corredoira" data-station="EDAR_CORREDOIRA">
+                    <span class="icon">🌫️</span>
+                    <h3>EDAR CORREDOIRA</h3>
+                </button>
+                <button class="station-card edar-botos" data-station="EDAR_BOTOS">
+                    <span class="icon">🏭</span>
+                    <h3>EDAR DE BOTOS</h3>
+                </button>
+            </div>
+        </div>
+
+        <div id="form-view" class="view" style="display: none;">
+            <header>
+                <button id="back-btn" class="btn-secondary">← Volver</button>
+                <h1 id="station-title">Estación</h1>
+            </header>
+            <form id="station-form">
+                <!-- Dynamic form fields will be injected here -->
+                <div id="form-fields"></div>
+                <button type="submit" class="btn-primary">Guardar Datos</button>
+            </form>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,963 @@
+:root {
+    --primary: #007AFF;
+    --primary-dark: #0056b3;
+    --bg: #0a0a0c;
+    --card-bg: #1c1c1e;
+    --text: #ffffff;
+    --text-muted: #8e8e93;
+    --border: #38383a;
+    --radius: 12px;
+    --gradient: linear-gradient(135deg, #007AFF 0%, #00C6FF 100%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+#app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.view {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Auth View */
+#login-view {
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at top right, #007AFF22, transparent),
+        radial-gradient(circle at bottom left, #00C6FF11, transparent);
+}
+
+.login-card {
+    background: var(--card-bg);
+    padding: 3rem;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+.login-card h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.login-card p {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+.company-logo {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.employee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.employee-btn {
+    background: #2c2c2e;
+    border: 1px solid var(--border);
+    padding: 1.5rem 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+}
+
+.employee-btn:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    background: var(--primary);
+}
+
+#welcome-user {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    display: block;
+}
+
+.header-left h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Backup Section */
+.backup-section {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 20px;
+    margin-bottom: 3rem;
+    border: 1px solid var(--border);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.backup-section h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+
+.backup-buttons {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-export {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1rem;
+}
+
+.btn-export.excel {
+    background: #107c10;
+    color: white;
+}
+
+.btn-export.excel:hover {
+    background: #0e6b0e;
+    transform: scale(1.02);
+}
+
+.btn-export.pdf {
+    background: #e11d48;
+    color: white;
+}
+
+.btn-export.pdf:hover {
+    background: #be123c;
+    transform: scale(1.02);
+}
+
+/* Dashboard */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    max-width: 1200px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.station-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.station-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+    color: #1a1a1c;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.station-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    transition: all 0.3s ease;
+}
+
+.station-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.station-card .icon {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.station-card h3 {
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+}
+
+/* Individual Station Colors - Vibrant & Unique */
+.station-card.etap::before {
+    background: linear-gradient(90deg, #00f2fe, #4facfe);
+}
+
+.station-card.etap:hover {
+    background: linear-gradient(180deg, #ffffff, #e0f7fa);
+}
+
+.station-card.catasos::before {
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+}
+
+.station-card.catasos:hover {
+    background: linear-gradient(180deg, #ffffff, #fce4ec);
+}
+
+.station-card.vilatuxe::before {
+    background: linear-gradient(90deg, #a8ff78, #78ffd6);
+}
+
+.station-card.vilatuxe:hover {
+    background: linear-gradient(180deg, #ffffff, #f1f8e9);
+}
+
+.station-card.bombeo-botos::before {
+    background: linear-gradient(90deg, #43e97b, #38f9d7);
+}
+
+.station-card.bombeo-botos:hover {
+    background: linear-gradient(180deg, #ffffff, #e8f5e9);
+}
+
+.station-card.edar-botos::before {
+    background: linear-gradient(90deg, #f6d365, #fda085);
+}
+
+.station-card.edar-botos:hover {
+    background: linear-gradient(180deg, #ffffff, #fff3e0);
+}
+
+.station-card.edar-corredoira::before {
+    background: linear-gradient(90deg, #84fab0, #8fd3f4);
+}
+
+.station-card.edar-corredoira:hover {
+    background: linear-gradient(180deg, #ffffff, #e0f2f1);
+}
+
+/* Buttons */
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: var(--gradient);
+    border: none;
+    border-radius: var(--radius);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.btn-secondary {
+    padding: 8px 16px;
+    background: #2c2c2e;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+    background: #3a3a3c;
+}
+
+/* Forms */
+#station-form {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.form-header-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.section-title {
+    font-size: 1.1rem;
+    color: var(--primary);
+    margin: 2.5rem 0 1.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.field-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.25rem;
+}
+
+.double-input-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #232326;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.double-field-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 0.5rem;
+    align-items: center;
+    background: #1c1c1e;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #2c2c2e;
+    transition: background 0.2s;
+}
+
+.double-field-row:hover {
+    background: #252529;
+}
+
+.double-field-row label {
+    font-size: 0.9rem;
+    color: var(--text);
+    text-align: left;
+    margin-bottom: 0;
+}
+
+.double-field-row input {
+    width: 100%;
+    padding: 6px;
+    background: #2c2c2e;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: white;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.diff-display {
+    background: #232326;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 32px;
+    font-weight: 600;
+}
+
+@media (max-width: 800px) {
+    .table-header {
+        display: none;
+    }
+
+    .double-field-row {
+        grid-template-columns: 1fr 1fr;
+        padding: 1rem;
+    }
+
+}
+
+/* Sheet Style for Botos */
+/* Sheet Style for Botos - Exact Replica of Image */
+.sheet-form {
+    max-width: 1450px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0.5rem !important;
+    background: #fff !important;
+    color: #1a1a1a !important;
+    border: 3px solid #000 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    box-sizing: border-box;
+}
+
+.sheet-header-title {
+    text-align: center;
+    border-bottom: 2px solid #000;
+    padding: 0.2rem;
+    margin-bottom: 0.5rem;
+    color: #000;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+.monthly-controls {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    background: #fff;
+    border-bottom: 2px solid #000;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.control-item {
+    grid-column: span 2;
+    padding: 4px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-right: 1px solid #000;
+}
+
+.monthly-controls select {
+    border: 1px solid #ccc;
+    font-size: 0.8rem;
+    padding: 2px;
+}
+
+.sheet-table {
+    display: grid;
+    border: 1px solid #000;
+    background: #fff;
+    overflow-x: auto;
+}
+
+/* EDAR BOTOS: 16 columns matching the paper form proportions */
+.sheet-table.botos-diario {
+    display: grid;
+    grid-template-columns: 40px 60px 45px 45px 80px 100px 100px 85px 85px 85px 85px 85px 85px 85px 85px 1fr;
+    background-color: #000;
+    gap: 1px;
+    border: 2px solid #000;
+    overflow-x: auto;
+}
+
+/* EDAR BOTOS HORAS: 21 columns for Hoja 2, 3, 4 (added 15px spacer at start) */
+.sheet-table.botos-horas {
+    display: grid;
+    grid-template-columns: 20px 95px 60px 20px repeat(18, 75px);
+    background-color: #000;
+    gap: 1px;
+    border: 2px solid #000;
+    overflow-x: auto;
+}
+
+/* Tab Navigation */
+.sheet-tabs {
+    display: flex;
+    background: #f0f0f0;
+    border: 1px solid #000;
+    border-bottom: none;
+    margin-top: 10px;
+}
+
+.tab-btn {
+    padding: 8px 16px;
+    border: none;
+    border-right: 1px solid #000;
+    background: #e0e0e0;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.75rem;
+    color: #444;
+}
+
+.tab-btn.active {
+    background: #fff;
+    color: #000;
+    border-bottom: 2px solid var(--accent);
+}
+
+/* EDAR CORREDOIRA: 17 columns specialize, wider first column for DD/MM/AAAA */
+.sheet-table.corredoira {
+    grid-template-columns: 85px 60px 50px 50px 80px 100px 100px 80px 80px 80px 80px 80px 80px 80px 80px 80px 1fr;
+}
+
+.sheet-cell {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 28px;
+    font-size: 0.75rem;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.sheet-header-cell {
+    background: #f0f0f0;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    line-height: 1;
+    border-bottom: 2px solid #000;
+    letter-spacing: -0.2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.metadata-cell {
+    background: #f0f0f0;
+    font-weight: bold;
+    font-size: 0.85rem;
+    /* Increased font size */
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+    border-bottom: 1px solid #000;
+    color: #000;
+}
+
+.metadata-cell select {
+    background: #fff;
+    /* White background for contrast */
+    border: 1px solid #000;
+    /* Added border */
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    /* Consistent font size */
+    color: #000;
+    cursor: pointer;
+    padding: 2px 4px;
+    margin-left: 5px;
+}
+
+.header-vertical {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 75px;
+    width: 100%;
+}
+
+.sheet-cell input {
+    width: 100%;
+    border: none !important;
+    background: transparent !important;
+    color: #000 !important;
+    text-align: center;
+    font-size: 0.75rem;
+    /* Reduced to fit long numbers */
+    padding: 1px 0;
+    font-family: monospace;
+    /* Monospace fits numbers better in tight spaces */
+}
+
+.sheet-cell input:focus {
+    background: #fffde7 !important;
+    outline: none;
+}
+
+.span-row-2 {
+    grid-row: span 2;
+}
+
+.span-col-2 {
+    grid-column: span 2;
+}
+
+.span-col-3 {
+    grid-column: span 3;
+}
+
+.span-col-4 {
+    grid-column: span 4;
+}
+
+.span-col-5 {
+    grid-column: span 5;
+}
+
+.span-col-15 {
+    grid-column: span 15;
+}
+
+.span-col-17 {
+    grid-column: span 17;
+}
+
+.footer-cell {
+    background: #f0f0f0;
+    font-weight: bold;
+    border-top: 2px solid #000;
+}
+
+.initial-row-cell {
+    background: #fff;
+    font-style: italic;
+    color: #666;
+}
+
+.date-cell {
+    font-weight: bold;
+    background: #fff;
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+    .view {
+        padding: 1rem;
+    }
+
+    .login-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .station-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-header-info {
+        grid-template-columns: 1fr;
+    }
+
+    .double-input-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ETAP Sheets - Rebuilding from images */
+.sheet-header {
+    background: #fff;
+    color: #000;
+    padding: 10px;
+    border-bottom: 2px solid #000;
+}
+
+.header-main {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+}
+
+.header-main .logo {
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.header-main .title-container {
+    text-align: center;
+}
+
+.header-main .title-container h2 {
+    margin: 0;
+    font-weight: 900;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.header-main .title-container p {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.header-main .meta {
+    text-align: right;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.date-selects {
+    border-bottom: 1px solid #000;
+    padding-bottom: 3px;
+    margin-bottom: 3px;
+}
+
+.date-selects select {
+    border: none;
+    font-weight: bold;
+    background: transparent;
+    cursor: pointer;
+}
+
+.sheet-table.etap-hoja1 {
+    display: grid;
+    grid-template-columns: 45px 65px repeat(11, 80px);
+    background-color: #000;
+    gap: 1px;
+    border: 2px solid #000;
+    overflow-x: auto;
+}
+
+.sheet-table.etap-hoja2 {
+    display: grid;
+    grid-template-columns: 45px 65px repeat(14, 80px);
+    background-color: #000;
+    gap: 1px;
+    border: 2px solid #000;
+    overflow-x: auto;
+}
+
+.sheet-table.etap-hoja3 {
+    display: grid;
+    grid-template-columns: 45px 65px 70px repeat(5, 80px) repeat(9, 80px);
+    background-color: #000;
+    gap: 1px;
+    border: 2px solid #000;
+    overflow-x: auto;
+}
+
+.sheet-table.etap-hoja4 {
+    display: grid;
+    grid-template-columns: 45px 65px repeat(4, 75px) repeat(4, 75px) repeat(6, 75px) repeat(4, 75px);
+    background-color: #000;
+    gap: 1px;
+    border: 2px solid #000;
+    overflow-x: auto;
+}
+
+.sheet-table.etap-hoja5 {
+    display: grid;
+    grid-template-columns: 45px 65px 80px repeat(6, 80px) repeat(6, 80px);
+    background-color: #000;
+    gap: 1px;
+    border: 2px solid #000;
+    overflow-x: auto;
+}
+
+/* Bombeo de Botos Sheets */
+.sheet-table.bombeo-botos-hoja1 {
+    display: grid;
+    grid-template-columns: 40px 60px repeat(6, 80px) repeat(7, 85px);
+    background-color: #000;
+    gap: 1px;
+    border: 2px solid #000;
+    overflow-x: auto;
+}
+
+.sheet-table.bombeo-botos-hoja2 {
+    display: grid;
+    grid-template-columns: 40px 60px repeat(7, 1fr) repeat(7, 1fr);
+    background-color: #000;
+    gap: 1px;
+    border: 2px solid #000;
+}
+
+/* Bombeo de Catasos Sheets */
+.sheet-table.bombeo-catasos-hoja1 {
+    display: grid;
+    grid-template-columns: 40px 60px repeat(6, 80px) repeat(7, 85px);
+    background-color: #000;
+    gap: 1px;
+    border: 2px solid #000;
+}
+
+.sheet-table.bombeo-catasos-hoja2 {
+    display: grid;
+    grid-template-columns: 40px 60px repeat(7, 85px) repeat(7, 85px);
+    background-color: #000;
+    gap: 1px;
+    border: 2px solid #000;
+}
+
+.sheet-table.botos-energia {
+    display: grid;
+    grid-template-columns: 40px repeat(22, 85px);
+    /* Changed 1fr to 85px to ensure 8 digits fit */
+    background-color: #000;
+    gap: 1px;
+    border: 2px solid #000;
+    overflow-x: auto;
+    /* Allow scrolling if too wide */
+}
+
+.header-vertical {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: nowrap;
+    font-size: 0.65rem;
+    padding: 2px;
+}
+
+.span-col-2 {
+    grid-column: span 2;
+}
+
+.span-col-3 {
+    grid-column: span 3;
+}
+
+.span-col-4 {
+    grid-column: span 4;
+}
+
+.span-col-5 {
+    grid-column: span 5;
+}
+
+.span-col-6 {
+    grid-column: span 6;
+}
+
+.span-col-7 {
+    grid-column: span 7;
+}
+
+.sheet-cell {
+    background: #fff;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sheet-header-cell {
+    background: #fff;
+    font-weight: 900;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.span-row-2 {
+    grid-row: span 2;
+}
+
+.span-col-4 {
+    grid-column: span 4;
+}
+
+.initial-row-cell {
+    background-color: #fce4ec !important;
+}
+
+.disabled-day {
+    background-color: #f5f5f5 !important;
+}
+
+.sheet-cell input {
+    width: 100%;
+    height: 100%;
+    border: none !important;
+    text-align: center;
+    background: transparent;
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+.sheet-tabs {
+    display: flex;
+    background: #fff;
+    border-bottom: 2px solid #000;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    border: none;
+    background: #eee;
+    cursor: pointer;
+    font-weight: bold;
+    border-right: 1px solid #000;
+}
+
+.tab-btn.active {
+    background: #fff;
+    color: var(--primary-color);
+}
+
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
