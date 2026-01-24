@@ -475,27 +475,19 @@ header {
 .premium-header {
     background: linear-gradient(135deg, #003087 0%, #0056b3 100%);
     color: white;
-    padding: 1.5rem 2rem;
+    padding: 1rem 2rem;
     border-bottom: 4px solid #000;
+    text-align: center;
+    position: relative;
 }
 
-.header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.header-brand {
-    display: flex;
-    flex-direction: column;
-}
-
-.brand-name {
-    font-size: 2.2rem;
+.header-logo-top {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font-size: 0.9rem;
     font-weight: 900;
     letter-spacing: 2px;
-    line-height: 1;
-    margin-bottom: 0.2rem;
 }
 
 .header-logo-top {
@@ -737,33 +729,6 @@ header {
     outline: none;
 }
 
-.span-row-2 {
-    grid-row: span 2;
-}
-
-.span-col-2 {
-    grid-column: span 2;
-}
-
-.span-col-3 {
-    grid-column: span 3;
-}
-
-.span-col-4 {
-    grid-column: span 4;
-}
-
-.span-col-5 {
-    grid-column: span 5;
-}
-
-.span-col-15 {
-    grid-column: span 15;
-}
-
-.span-col-17 {
-    grid-column: span 17;
-}
 
 .footer-cell {
     background: #f0f0f0;
@@ -959,6 +924,11 @@ header {
     padding: 2px;
 }
 
+/* Utility Spans */
+.span-row-2 {
+    grid-row: span 2;
+}
+
 .span-col-2 {
     grid-column: span 2;
 }
@@ -983,27 +953,16 @@ header {
     grid-column: span 7;
 }
 
-.sheet-cell {
-    background: #fff;
-    padding: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.span-col-8 {
+    grid-column: span 8;
 }
 
-.sheet-header-cell {
-    background: #fff;
-    font-weight: 900;
-    font-size: 0.75rem;
-    text-transform: uppercase;
+.span-col-15 {
+    grid-column: span 15;
 }
 
-.span-row-2 {
-    grid-row: span 2;
-}
-
-.span-col-4 {
-    grid-column: span 4;
+.span-col-17 {
+    grid-column: span 17;
 }
 
 .initial-row-cell {

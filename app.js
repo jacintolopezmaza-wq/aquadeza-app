@@ -953,13 +953,13 @@ const App = {
     renderGenericEnergiaContent(logs, station) {
         const monthKey = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}`;
         let html = `<div class="sheet-table botos-energia">
-            <!-- Row 1 Headers -->
+            <!-- Order matching image: ACTIVA -> REACTIVA -> MAXIMETRO -->
             <div class="sheet-cell sheet-header-cell span-row-2">DIA</div>
             <div class="sheet-cell sheet-header-cell span-col-8">ENERGÍA ACTIVA</div>
             <div class="sheet-cell sheet-header-cell span-col-8">ENERGÍA REACTIVA</div>
             <div class="sheet-cell sheet-header-cell span-col-4">MAXIMETRO</div>
 
-            <!-- Row 2 Sub-Headers matching image -->
+            <!-- ACTIVA Subheaders -->
             <div class="sheet-cell sheet-header-cell">P1 1.18.1</div>
             <div class="sheet-cell sheet-header-cell">P2 1.18.2</div>
             <div class="sheet-cell sheet-header-cell">P3 1.18.3</div>
@@ -969,6 +969,7 @@ const App = {
             <div class="sheet-cell sheet-header-cell">TOTAL 1.18.0</div>
             <div class="sheet-cell sheet-header-cell">DIF</div>
             
+            <!-- REACTIVA Subheaders -->
             <div class="sheet-cell sheet-header-cell">P1 1.58.1</div>
             <div class="sheet-cell sheet-header-cell">P2 1.58.2</div>
             <div class="sheet-cell sheet-header-cell">P3 1.58.3</div>
@@ -978,6 +979,7 @@ const App = {
             <div class="sheet-cell sheet-header-cell">TOTAL 1.58.0</div>
             <div class="sheet-cell sheet-header-cell">DIF</div>
 
+            <!-- MAXIMETRO Subheaders -->
             <div class="sheet-cell sheet-header-cell">P1 1.16.1</div>
             <div class="sheet-cell sheet-header-cell">P2 1.16.2</div>
             <div class="sheet-cell sheet-header-cell">P3 1.16.3</div>
@@ -988,25 +990,27 @@ const App = {
         for (let d = 0; d <= 31; d++) {
             const dateStr = `${monthKey}-${String(d).padStart(2, '0')}`;
             const log = logs.find(l => l.fecha === dateStr) || {};
-            const isInvalidDay = (d > daysInMonth && d !== 0);
-            const isInitial = d === 0;
+            const isDisabled = (d > daysInMonth && d !== 0);
+            const rowClass = (d === 0) ? 'initial-row-cell' : '';
 
-            html += `
-                <div class="sheet-cell ${isInitial ? 'initial-row-cell' : ''} ${isInvalidDay ? 'disabled-day' : ''}">${d}</div>
-                ${['e_a_p1', 'e_a_p2', 'e_a_p3', 'e_a_p4', 'e_a_p5', 'e_a_p6', 'e_a_total'].map(f => `
-                    <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="${f}" value="${log[f] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
-                `).join('')}
-                <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="e_a_dif" value="${log.e_a_dif || ''}" disabled></div>
-                
-                ${['e_r_p1', 'e_r_p2', 'e_r_p3', 'e_r_p4', 'e_r_p5', 'e_r_p6', 'e_r_total'].map(f => `
-                    <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="${f}" value="${log[f] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
-                `).join('')}
-                <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="e_r_dif" value="${log.e_r_dif || ''}" disabled></div>
-                
-                ${['m_p1', 'm_p2', 'm_p3', 'm_total'].map(f => `
-                    <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="${f}" value="${log[f] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
-                `).join('')}
-            `;
+            html += `<div class="sheet-cell ${rowClass} ${isDisabled ? 'disabled-day' : ''}">${d}</div>`;
+
+            // ACTIVA inputs (8)
+            ['e_a_p1', 'e_a_p2', 'e_a_p3', 'e_a_p4', 'e_a_p5', 'e_a_p6', 'e_a_total'].forEach(f => {
+                html += `<div class="sheet-cell ${rowClass}"><input type="number" step="0.001" class="row-input" data-date="${dateStr}" data-field="${f}" value="${log[f] || ''}" ${isDisabled ? 'disabled' : ''}></div>`;
+            });
+            html += `<div class="sheet-cell ${rowClass}"><input type="number" class="row-input" data-date="${dateStr}" data-field="e_a_dif" value="${log.e_a_dif || ''}" disabled></div>`;
+
+            // REACTIVA inputs (8)
+            ['e_r_p1', 'e_r_p2', 'e_r_p3', 'e_r_p4', 'e_r_p5', 'e_r_p6', 'e_r_total'].forEach(f => {
+                html += `<div class="sheet-cell ${rowClass}"><input type="number" step="0.001" class="row-input" data-date="${dateStr}" data-field="${f}" value="${log[f] || ''}" ${isDisabled ? 'disabled' : ''}></div>`;
+            });
+            html += `<div class="sheet-cell ${rowClass}"><input type="number" class="row-input" data-date="${dateStr}" data-field="e_r_dif" value="${log.e_r_dif || ''}" disabled></div>`;
+
+            // MAXIMETRO inputs (4)
+            ['m_p1', 'm_p2', 'm_p3', 'm_total'].forEach(f => {
+                html += `<div class="sheet-cell ${rowClass}"><input type="number" step="0.001" class="row-input" data-date="${dateStr}" data-field="${f}" value="${log[f] || ''}" ${isDisabled ? 'disabled' : ''}></div>`;
+            });
         }
         return html + `</div>`;
     },
