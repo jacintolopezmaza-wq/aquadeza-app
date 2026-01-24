@@ -507,15 +507,18 @@ header {
 
 }
 
-/* Sheet Style for Botos - High visibility for presentation */
+/* Sheet Style - High visibility for presentation */
 .sheet-form {
-    max-width: 1600px !important;
-    margin: 1rem auto !important;
-    padding: 1.5rem !important;
-    background: #fff !important;
-    border-radius: var(--radius-lg) !important;
-    box-shadow: var(--shadow-md) !important;
-    border: 1px solid var(--border-color) !important;
+    max-width: 1600px;
+    width: 95%;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-premium);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
 }
 
 /* Premium Header inside Forms */
@@ -653,35 +656,51 @@ header {
 /* Tab Navigation */
 .sheet-tabs {
     display: flex;
-    background: #f0f0f0;
-    border: 1px solid #000;
-    border-bottom: none;
-    margin-top: 10px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-bottom: 2px solid var(--primary);
+    margin-top: 1rem;
+    padding: 0 10px;
+    gap: 5px;
 }
 
 .tab-btn {
-    padding: 8px 16px;
+    padding: 12px 24px;
     border: none;
-    border-right: 1px solid #000;
-    background: #e0e0e0;
+    background: transparent;
     cursor: pointer;
-    font-weight: bold;
-    font-size: 0.75rem;
-    color: #444;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+}
+
+.tab-btn:hover {
+    color: var(--primary);
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .tab-btn.active {
     background: #fff;
-    color: #000;
-    border-bottom: 2px solid var(--accent);
+    color: var(--primary);
+    border-bottom: 3px solid var(--accent);
 }
 
-/* EDAR CORREDOIRA: 17 columns specialize, matching paper form */
-.sheet-table.corredoira {
-    grid-template-columns: 40px 85px 45px 45px 65px 105px 105px 70px 75px 70px 70px 70px 80px 80px 80px 80px 1fr;
+/* Station Tables */
+.sheet-table {
+    display: grid;
+    width: 100%;
     background-color: #000;
     gap: 1px;
     border: 2px solid #000;
+    overflow-x: auto;
+    margin-top: 0;
+}
+
+.sheet-table.corredoira {
+    grid-template-columns: 45px 85px 45px 45px 65px 105px 105px 70px 75px 70px 70px 70px 80px 80px 80px 80px 1fr;
 }
 
 .sheet-table.corredoira-horas {
@@ -900,29 +919,29 @@ header {
 }
 
 .sheet-table.etap-hoja1 {
-    grid-template-columns: 45px 65px repeat(11, 80px);
+    grid-template-columns: 45px 85px repeat(11, minmax(80px, 1fr));
 }
 
 .sheet-table.etap-hoja2 {
-    grid-template-columns: 45px 65px repeat(14, 80px);
+    grid-template-columns: 45px 85px repeat(14, minmax(80px, 1fr));
 }
 
 .sheet-table.etap-hoja3 {
-    grid-template-columns: 45px 65px 70px repeat(5, 80px) repeat(9, 80px);
+    grid-template-columns: 45px 85px 90px repeat(14, minmax(80px, 1fr));
 }
 
 .sheet-table.etap-hoja4 {
-    grid-template-columns: 45px 65px repeat(4, 75px) repeat(4, 75px) repeat(6, 75px) repeat(4, 75px);
+    grid-template-columns: 45px 85px repeat(18, minmax(75px, 1fr));
 }
 
 .sheet-table.etap-hoja5 {
-    grid-template-columns: 45px 65px 80px repeat(6, 80px) repeat(6, 80px);
+    grid-template-columns: 45px 85px 100px repeat(12, minmax(80px, 1fr));
 }
 
 /* Bombeo de Botos Sheets */
 .sheet-table.bombeo-botos-hoja1 {
     display: grid;
-    grid-template-columns: 40px 60px repeat(6, 80px) repeat(7, 85px);
+    grid-template-columns: 45px 85px repeat(13, minmax(80px, 1fr));
     background-color: #000;
     gap: 1px;
     border: 2px solid #000;
@@ -940,7 +959,7 @@ header {
 /* Bombeo de Catasos Sheets */
 .sheet-table.bombeo-catasos-hoja1 {
     display: grid;
-    grid-template-columns: 40px 60px repeat(6, 80px) repeat(7, 85px);
+    grid-template-columns: 45px 85px repeat(13, minmax(80px, 1fr));
     background-color: #000;
     gap: 1px;
     border: 2px solid #000;
@@ -948,7 +967,7 @@ header {
 
 .sheet-table.bombeo-catasos-hoja2 {
     display: grid;
-    grid-template-columns: 40px 60px repeat(7, 85px) repeat(7, 85px);
+    grid-template-columns: 45px 85px repeat(14, minmax(80px, 1fr));
     background-color: #000;
     gap: 1px;
     border: 2px solid #000;
@@ -1025,25 +1044,6 @@ header {
     font-size: 0.9rem;
 }
 
-.sheet-tabs {
-    display: flex;
-    background: #fff;
-    border-bottom: 2px solid #000;
-}
-
-.tab-btn {
-    padding: 10px 20px;
-    border: none;
-    background: #eee;
-    cursor: pointer;
-    font-weight: bold;
-    border-right: 1px solid #000;
-}
-
-.tab-btn.active {
-    background: #fff;
-    color: var(--primary-color);
-}
 
 .form-actions {
     margin-top: 20px;

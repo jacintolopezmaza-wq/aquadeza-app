@@ -2308,5 +2308,5 @@ const App = {
 };
 
 
-console.log('App version: 3.3 - Public Backup Enabled');
+console.log('App version: 3.4 - UI Presentation Improved');
 App.init();
