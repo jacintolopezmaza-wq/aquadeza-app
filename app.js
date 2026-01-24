@@ -2272,7 +2272,7 @@ const App = {
 
                     doc.setFontSize(8);
                     doc.setTextColor(100);
-                    doc.text(`Exportado: ${new Date().toLocaleDateString()} - Documento Oficial de Control`, 14, 21);
+                    doc.text(`Exportado: ${new Date().toLocaleDateString()} - Registro Diario`, 14, 21);
 
                     const body = logs.sort((a, b) => (a.fecha || '').localeCompare(b.fecha || '')).map(row => {
                         return sheet.keys.map(key => {
@@ -2308,5 +2308,5 @@ const App = {
 };
 
 
-console.log('App version: 3.2 - Backup Access Updated');
+console.log('App version: 3.3 - Public Backup Enabled');
 App.init();
