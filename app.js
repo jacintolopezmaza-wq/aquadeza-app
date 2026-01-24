@@ -241,15 +241,11 @@ const App = {
         // Metadata Inline Controls
         let html = `
             <div class="premium-header">
-                <div class="header-row">
-                    <div class="header-brand">
-                        <span class="brand-name">AQUADEZA</span>
-                        <span class="brand-tagline">SERVICIO DE LALÍN</span>
-                    </div>
-                    <div class="header-station-box">
-                        <h1 class="station-title">EDAR DE BOTOS</h1>
-                        <div class="sheet-info-badge">${this.currentBotosTab.toUpperCase()}</div>
-                    </div>
+                <div class="header-logo-top">AQUADEZA</div>
+                <div class="header-main-titles">
+                    <div class="brand-tagline">SERVICIO DE LALÍN</div>
+                    <h1 class="station-title">EDAR DE BOTOS</h1>
+                    <div class="sheet-info-badge">${this.currentBotosTab.toUpperCase()}</div>
                 </div>
                 <div class="header-controls-row">
                     <div class="control-pill">
@@ -963,14 +959,14 @@ const App = {
             <div class="sheet-cell sheet-header-cell span-col-8">ENERGÍA REACTIVA</div>
             <div class="sheet-cell sheet-header-cell span-col-4">MAXIMETRO</div>
 
-            <!-- Row 2 Sub-Headers -->
+            <!-- Row 2 Sub-Headers matching image -->
             <div class="sheet-cell sheet-header-cell">P1 1.18.1</div>
             <div class="sheet-cell sheet-header-cell">P2 1.18.2</div>
             <div class="sheet-cell sheet-header-cell">P3 1.18.3</div>
             <div class="sheet-cell sheet-header-cell">P4 1.18.4</div>
             <div class="sheet-cell sheet-header-cell">P5 1.18.5</div>
             <div class="sheet-cell sheet-header-cell">P6 1.18.6</div>
-            <div class="sheet-cell sheet-header-cell">TOTAL</div>
+            <div class="sheet-cell sheet-header-cell">TOTAL 1.18.0</div>
             <div class="sheet-cell sheet-header-cell">DIF</div>
             
             <div class="sheet-cell sheet-header-cell">P1 1.58.1</div>
@@ -979,13 +975,13 @@ const App = {
             <div class="sheet-cell sheet-header-cell">P4 1.58.4</div>
             <div class="sheet-cell sheet-header-cell">P5 1.58.5</div>
             <div class="sheet-cell sheet-header-cell">P6 1.58.6</div>
-            <div class="sheet-cell sheet-header-cell">TOTAL</div>
+            <div class="sheet-cell sheet-header-cell">TOTAL 1.58.0</div>
             <div class="sheet-cell sheet-header-cell">DIF</div>
 
             <div class="sheet-cell sheet-header-cell">P1 1.16.1</div>
             <div class="sheet-cell sheet-header-cell">P2 1.16.2</div>
             <div class="sheet-cell sheet-header-cell">P3 1.16.3</div>
-            <div class="sheet-cell sheet-header-cell">TOTAL</div>
+            <div class="sheet-cell sheet-header-cell">TOTAL 1.16.0</div>
         `;
 
         const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
@@ -996,7 +992,7 @@ const App = {
             const isInitial = d === 0;
 
             html += `
-                <div class="sheet-cell ${isInitial ? 'initial-row-cell' : ''} ${isInvalidDay ? 'disabled-day' : ''}">${d === 0 ? 'INI' : d}</div>
+                <div class="sheet-cell ${isInitial ? 'initial-row-cell' : ''} ${isInvalidDay ? 'disabled-day' : ''}">${d}</div>
                 ${['e_a_p1', 'e_a_p2', 'e_a_p3', 'e_a_p4', 'e_a_p5', 'e_a_p6', 'e_a_total'].map(f => `
                     <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="${f}" value="${log[f] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 `).join('')}
