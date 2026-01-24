@@ -8,7 +8,13 @@ const App = {
     currentEtapTab: 'hoja1',
     currentCorredoiraTab: 'diario',
     currentVilatuxeTab: 'hoja1',
-    employees: ['Carlos', 'Alberto', 'Juan', 'Miguel', 'Martin', 'Emilio', 'Suso'],
+    generateYearOptions(selectedYear) {
+        let html = '';
+        for (let y = 2024; y <= 2050; y++) {
+            html += `<option value="${y}" ${y === selectedYear ? 'selected' : ''}>${y}</option>`;
+        }
+        return html;
+    },
     views: {
         login: document.getElementById('login-view'),
         dashboard: document.getElementById('dashboard-view'),
@@ -46,7 +52,6 @@ const App = {
     },
 
     init() {
-        this.renderEmployeeSelection();
         this.setupEventListeners();
         this.checkAuth();
         this.registerServiceWorker();
@@ -54,6 +59,15 @@ const App = {
 
     setupEventListeners() {
         document.getElementById('logout-btn').addEventListener('click', () => this.handleLogout());
+
+        document.getElementById('login-manual-btn').addEventListener('click', () => {
+            const nameInput = document.getElementById('login-name');
+            if (nameInput.value.trim()) {
+                this.handleLogin(nameInput.value.trim());
+            } else {
+                alert("Por favor, ingrese su nombre.");
+            }
+        });
 
         document.querySelectorAll('.station-card').forEach(card => {
             card.addEventListener('click', () => this.showStationForm(card.getAttribute('data-station')));
@@ -71,17 +85,6 @@ const App = {
         document.getElementById('export-pdf-btn').addEventListener('click', () => this.exportAllData('pdf'));
     },
 
-    renderEmployeeSelection() {
-        const container = document.getElementById('employee-selection');
-        if (!container) return;
-
-        container.innerHTML = this.employees.map(name => `
-            <button class="employee-btn" onclick="App.handleLogin('${name}')">
-                <span class="icon">👤</span>
-                <span>${name}</span>
-            </button>
-        `).join('');
-    },
 
     checkAuth() {
         const savedUser = localStorage.getItem('control_user');
@@ -257,7 +260,7 @@ const App = {
                     <div class="control-pill">
                         <label>AÑO</label>
                         <select id="year-select">
-                            ${[2024, 2025, 2026, 2027, 2028, 2029, 2030].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
+                            ${this.generateYearOptions(this.currentYear)}
                         </select>
                     </div>
                 </div>
@@ -330,9 +333,7 @@ const App = {
                     </div>
                     <div class="control-pill">
                         <label>AÑO</label>
-                        <select id="year-select">
-                            ${[2024, 2025, 2026, 2027, 2028, 2029, 2030].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
-                        </select>
+                            ${this.generateYearOptions(this.currentYear)}
                     </div>
                 </div>
             </div>
@@ -504,7 +505,7 @@ const App = {
                     <div class="control-pill">
                         <label>AÑO</label>
                         <select id="year-select">
-                            ${[2024, 2025, 2026, 2027, 2028, 2029, 2030].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
+                            ${this.generateYearOptions(this.currentYear)}
                         </select>
                     </div>
                 </div>
@@ -1283,9 +1284,7 @@ const App = {
                     </div>
                     <div class="control-pill">
                         <label>AÑO</label>
-                        <select id="year-select">
-                            ${[2024, 2025, 2026, 2027, 2028, 2029, 2030].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
-                        </select>
+                            ${this.generateYearOptions(this.currentYear)}
                     </div>
                 </div>
             </div>
@@ -1718,9 +1717,7 @@ const App = {
                     </div>
                     <div class="control-pill">
                         <label>AÑO</label>
-                        <select id="year-select">
-                            ${[2024, 2025, 2026, 2027, 2028, 2029, 2030].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
-                        </select>
+                            ${this.generateYearOptions(this.currentYear)}
                     </div>
                 </div>
             </div>
@@ -2057,9 +2054,7 @@ const App = {
                     </div>
                     <div class="control-pill">
                         <label>AÑO</label>
-                        <select id="year-select">
-                            ${[2024, 2025, 2026, 2027, 2028, 2029, 2030].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
-                        </select>
+                            ${this.generateYearOptions(this.currentYear)}
                     </div>
                 </div>
             </div>
@@ -2308,5 +2303,5 @@ const App = {
 };
 
 
-console.log('App version: 3.4 - UI Presentation Improved');
+console.log('App version: 3.5 - Login and Years Updated');
 App.init();
