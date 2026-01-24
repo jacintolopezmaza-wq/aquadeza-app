@@ -951,47 +951,52 @@ const App = {
 
     renderEdarBotosEnergiaContent() {
         const logs = JSON.parse(localStorage.getItem(`logs_EDAR_BOTOS`) || '[]');
-        const monthKey = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}`;
+        return this.renderGenericEnergiaContent(logs, 'EDAR_BOTOS');
+    },
 
+    renderGenericEnergiaContent(logs, station) {
+        const monthKey = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}`;
         let html = `<div class="sheet-table botos-energia">
+            <!-- Row 1 Headers -->
             <div class="sheet-cell sheet-header-cell span-row-2">DIA</div>
             <div class="sheet-cell sheet-header-cell span-col-8">ENERGÍA ACTIVA</div>
-            <div class="sheet-cell sheet-header-cell">DIF</div>
             <div class="sheet-cell sheet-header-cell span-col-8">ENERGÍA REACTIVA</div>
-            <div class="sheet-cell sheet-header-cell">DIF</div>
             <div class="sheet-cell sheet-header-cell span-col-4">MAXIMETRO</div>
 
+            <!-- Row 2 Sub-Headers -->
             <div class="sheet-cell sheet-header-cell">P1 1.18.1</div>
             <div class="sheet-cell sheet-header-cell">P2 1.18.2</div>
             <div class="sheet-cell sheet-header-cell">P3 1.18.3</div>
             <div class="sheet-cell sheet-header-cell">P4 1.18.4</div>
             <div class="sheet-cell sheet-header-cell">P5 1.18.5</div>
             <div class="sheet-cell sheet-header-cell">P6 1.18.6</div>
-            <div class="sheet-cell sheet-header-cell">TOTAL 1.18.0</div>
-            <div class="sheet-cell sheet-header-cell"></div>
+            <div class="sheet-cell sheet-header-cell">TOTAL</div>
+            <div class="sheet-cell sheet-header-cell">DIF</div>
+            
             <div class="sheet-cell sheet-header-cell">P1 1.58.1</div>
             <div class="sheet-cell sheet-header-cell">P2 1.58.2</div>
             <div class="sheet-cell sheet-header-cell">P3 1.58.3</div>
             <div class="sheet-cell sheet-header-cell">P4 1.58.4</div>
             <div class="sheet-cell sheet-header-cell">P5 1.58.5</div>
             <div class="sheet-cell sheet-header-cell">P6 1.58.6</div>
-            <div class="sheet-cell sheet-header-cell">TOTAL 1.58.0</div>
-            <div class="sheet-cell sheet-header-cell"></div>
+            <div class="sheet-cell sheet-header-cell">TOTAL</div>
+            <div class="sheet-cell sheet-header-cell">DIF</div>
+
             <div class="sheet-cell sheet-header-cell">P1 1.16.1</div>
             <div class="sheet-cell sheet-header-cell">P2 1.16.2</div>
             <div class="sheet-cell sheet-header-cell">P3 1.16.3</div>
-            <div class="sheet-cell sheet-header-cell">TOTAL 1.16.0</div>
+            <div class="sheet-cell sheet-header-cell">TOTAL</div>
         `;
 
         const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
         for (let d = 0; d <= 31; d++) {
             const dateStr = `${monthKey}-${String(d).padStart(2, '0')}`;
             const log = logs.find(l => l.fecha === dateStr) || {};
-            const isInvalidDay = d > daysInMonth;
+            const isInvalidDay = (d > daysInMonth && d !== 0);
             const isInitial = d === 0;
 
             html += `
-                <div class="sheet-cell ${isInitial ? 'initial-row-cell' : ''} ${isInvalidDay ? 'disabled-day' : ''}">${d}</div>
+                <div class="sheet-cell ${isInitial ? 'initial-row-cell' : ''} ${isInvalidDay ? 'disabled-day' : ''}">${d === 0 ? 'INI' : d}</div>
                 ${['e_a_p1', 'e_a_p2', 'e_a_p3', 'e_a_p4', 'e_a_p5', 'e_a_p6', 'e_a_total'].map(f => `
                     <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="${f}" value="${log[f] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 `).join('')}
@@ -1010,68 +1015,36 @@ const App = {
         return html + `</div>`;
     },
 
-
     setupMonthlyEventListeners() {
-        // Month/Year changes
         const monthSelect = document.getElementById('month-select');
         if (monthSelect) {
-            monthSelect.addEventListener('change', (e) => {
+            monthSelect.onchange = (e) => {
                 this.currentMonth = parseInt(e.target.value);
-                if (this.currentStation === 'EDAR_BOTOS') {
-                    this.renderEdarBotosSheet(document.getElementById('form-fields'));
-                } else if (this.currentStation === 'EDAR_CORREDOIRA') {
-                    this.renderEdarCorredoiraSheet(document.getElementById('form-fields'));
-                } else if (this.currentStation === 'ETAP') {
-                    this.renderEtapSheet(document.getElementById('form-fields'));
-                } else if (this.currentStation === 'BOMBEO_BOTOS') {
-                    this.renderBombeoBotosSheet(document.getElementById('form-fields'));
-                } else if (this.currentStation === 'CATASOS') {
-                    this.renderCatasosSheet(document.getElementById('form-fields'));
-                }
-            });
+                this.renderFormFields(this.currentStation);
+            };
         }
-
         const yearSelect = document.getElementById('year-select');
         if (yearSelect) {
-            yearSelect.addEventListener('change', (e) => {
+            yearSelect.onchange = (e) => {
                 this.currentYear = parseInt(e.target.value);
-                if (this.currentStation === 'EDAR_BOTOS') {
-                    this.renderEdarBotosSheet(document.getElementById('form-fields'));
-                } else if (this.currentStation === 'EDAR_CORREDOIRA') {
-                    this.renderEdarCorredoiraSheet(document.getElementById('form-fields'));
-                } else if (this.currentStation === 'ETAP') {
-                    this.renderEtapSheet(document.getElementById('form-fields'));
-                } else if (this.currentStation === 'BOMBEO_BOTOS') {
-                    this.renderBombeoBotosSheet(document.getElementById('form-fields'));
-                } else if (this.currentStation === 'CATASOS') {
-                    this.renderCatasosSheet(document.getElementById('form-fields'));
-                }
-            });
+                this.renderFormFields(this.currentStation);
+            };
         }
 
-        // Cell input changes
         document.querySelectorAll('.row-input').forEach(input => {
-            input.addEventListener('change', () => {
+            input.onchange = () => {
                 const date = input.getAttribute('data-date');
                 const field = input.getAttribute('data-field');
                 const val = input.value;
-
                 this.saveSingleField(date, field, val);
 
-                if (field === 'caudal_lect') {
-                    this.recalculateDailyConsumption();
-                    // After consumption recalculation, we might have a new caudal_m3d value to save
-                    const m3dInput = document.querySelector(`.row-input[data-date="${date}"][data-field="caudal_m3d"]`);
-                    if (m3dInput) this.saveSingleField(date, 'caudal_m3d', m3dInput.value);
-                }
-
-                if ((this.currentStation === 'BOMBEO_BOTOS' || this.currentStation === 'CATASOS') && (field === 'b1' || field === 'b2' || field === 'b3')) {
+                if (field === 'caudal_lect') this.recalculateDailyConsumption();
+                if (['BOMBEO_BOTOS', 'CATASOS', 'VILATUXE'].includes(this.currentStation) && ['b1', 'b2', 'b3'].includes(field)) {
                     if (this.currentStation === 'BOMBEO_BOTOS') this.recalculateBombeoBotosDifs();
                     if (this.currentStation === 'CATASOS') this.recalculateCatasosDifs();
                 }
-
                 this.recalculateTotals();
-            });
+            };
         });
     },
 
@@ -2205,7 +2178,12 @@ const App = {
 
     renderVilatuxeHoja2Content() {
         const logs = JSON.parse(localStorage.getItem(`logs_VILATUXE`) || '[]');
-        return this.renderGenericEnergiaContent(logs);
+        return this.renderGenericEnergiaContent(logs, 'VILATUXE');
+    },
+
+    renderEdarCorredoiraEnergiaContent() {
+        const logs = JSON.parse(localStorage.getItem(`logs_EDAR_CORREDOIRA`) || '[]');
+        return this.renderGenericEnergiaContent(logs, 'EDAR_CORREDOIRA');
     },
 
     renderEdarCorredoiraEnergiaDifs() {
