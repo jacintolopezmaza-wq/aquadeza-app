@@ -1268,15 +1268,11 @@ const App = {
 
         let html = `
             <div class="premium-header">
-                <div class="header-row">
-                    <div class="header-brand">
-                        <span class="brand-name">AQUADEZA</span>
-                        <span class="brand-tagline">SERVICIO DE LALÍN</span>
-                    </div>
-                    <div class="header-station-box">
-                        <h1 class="station-title">EDAR CORREDOIRA</h1>
-                        <div class="sheet-info-badge">${this.currentCorredoiraTab.toUpperCase()}</div>
-                    </div>
+                <div class="header-logo-top">AQUADEZA</div>
+                <div class="header-main-titles">
+                    <div class="brand-tagline">SERVICIO DE LALÍN</div>
+                    <h1 class="station-title">EDAR CORREDOIRA</h1>
+                    <div class="sheet-info-badge">${this.currentCorredoiraTab.toUpperCase()}</div>
                 </div>
                 <div class="header-controls-row">
                     <div class="control-pill">
@@ -1344,7 +1340,7 @@ const App = {
             <div class="sheet-cell sheet-header-cell span-row-2"><div class="header-vertical">Día</div></div>
             <div class="sheet-cell sheet-header-cell span-row-2"><div class="header-vertical">Hora</div></div>
             <div class="sheet-cell sheet-header-cell span-col-2">Tª</div>
-            <div class="sheet-cell sheet-header-cell span-row-2"><div class="header-vertical">Precipitación mm.</div></div>
+            <div class="sheet-cell sheet-header-cell span-row-2"><div class="header-vertical">Precipi-tación mm.</div></div>
             <div class="sheet-cell sheet-header-cell span-col-2">CAUDAL</div>
             <div class="sheet-cell sheet-header-cell span-col-2">PARAMETROS CONTROL</div>
             <div class="sheet-cell sheet-header-cell span-col-3">RESIDUOS</div>
@@ -1358,9 +1354,9 @@ const App = {
             <div class="sheet-cell sheet-header-cell">m³/día</div>
             <div class="sheet-cell sheet-header-cell"><div class="header-vertical">Oxíg. mg/l</div></div>
             <div class="sheet-cell sheet-header-cell"><div class="header-vertical">Volum. Fang. ml/l</div></div>
-            <div class="sheet-cell sheet-header-cell">Desbaste m³</div>
-            <div class="sheet-cell sheet-header-cell">Arenas m³</div>
-            <div class="sheet-cell sheet-header-cell">Fangos filtro m³</div>
+            <div class="sheet-cell sheet-header-cell"><div class="header-vertical">Desbaste m³</div></div>
+            <div class="sheet-cell sheet-header-cell"><div class="header-vertical">Arenas m³</div></div>
+            <div class="sheet-cell sheet-header-cell"><div class="header-vertical">Fangos filtro m³</div></div>
             <div class="sheet-cell sheet-header-cell">PUNTA I</div>
             <div class="sheet-cell sheet-header-cell">VALLE II</div>
             <div class="sheet-cell sheet-header-cell">LLANO III</div>
@@ -1469,27 +1465,18 @@ const App = {
             { id: 'espesador', label: 'ESPESADOR' }, { id: 'filtro', label: 'FILTRO BANDA' }
         ];
 
-        let html = `<div class="sheet-table botos-horas">
-            <div class="sheet-cell sheet-header-cell span-row-2"></div>
-            <div class="sheet-cell sheet-header-cell span-row-2">FECHA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2"></div>`; // Separador vertical
+        let html = `<div class="sheet-table corredoira-horas">
+            <div class="sheet-cell sheet-header-cell span-row-2">DÍA</div>
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>`;
         equipment.forEach(e => { html += `<div class="sheet-cell sheet-header-cell span-col-2">${e.label}</div> `; });
         html += equipment.map(() => `<div class="sheet-cell sheet-header-cell">LECTURA</div><div class="sheet-cell sheet-header-cell">H.</div>`).join('');
 
         const monthKey = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}`;
         const initialLog = logs.find(l => l.fecha === `${monthKey}-00`) || {};
 
-        // Blank horizontal row
-        for (let i = 0; i < 22; i++) html += `<div class="sheet-cell"></div>`;
-
         // Initial Row (Day 00)
-        html += `<div class="sheet-cell initial-row-cell">-</div>`;
-        html += `<div class="sheet-cell date-cell">
-            <input type="text" class="row-input" data-date="${monthKey}-00" data-field="h1_fecha_manual" value="${initialLog.h1_fecha_manual || ''}" placeholder="INICIAL" >
-        </div> `;
+        html += `<div class="sheet-cell initial-row-cell">0</div>`;
         html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>`;
-        html += `<div class="sheet-cell"></div>`; // Separador vertical
         equipment.forEach(e => {
             html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${monthKey}-00" data-field="h1_${e.id}_l" value="${initialLog['h1_' + e.id + '_l'] || ''}" ></div>`;
             html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${monthKey}-00" data-field="h1_${e.id}_h" value="${initialLog['h1_' + e.id + '_h'] || ''}" ></div>`;
@@ -1501,23 +1488,19 @@ const App = {
             const log = logs.find(l => l.fecha === dateStr) || {};
             const isInvalidDay = d > daysInMonth;
 
-            html += `<div class="sheet-cell"></div>`;
-            html += `<div class="sheet-cell date-cell ${isInvalidDay ? 'disabled-row' : ''}">
-                <input type="text" class="row-input" data-date="${dateStr}" data-field="h1_fecha_manual" value="${log.h1_fecha_manual || ''}" placeholder="" ${isInvalidDay ? 'disabled' : ''}>
-            </div> `;
+            html += `<div class="sheet-cell date-cell ${isInvalidDay ? 'disabled-row' : ''}">${d}</div>`;
             html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
-            html += `<div class="sheet-cell"></div>`; // Separador vertical
             equipment.forEach(e => {
                 html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="h1_${e.id}_l" value="${log['h1_' + e.id + '_l'] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
                 html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="h1_${e.id}_h" value="${log['h1_' + e.id + '_h'] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
             });
         }
 
-        html += `<div class="sheet-cell footer-cell span-col-4">TOTAL</div>`;
+        html += `<div class="sheet-cell footer-cell span-col-2">TOTAL</div>`;
         equipment.forEach(e => {
             html += `<div class="sheet-cell footer-cell" id="total-h1-${e.id}-l">-</div><div class="sheet-cell footer-cell" id="total-h1-${e.id}-h">-</div>`;
         });
-        html += `<div class="sheet-cell footer-cell span-col-4">MEDIA</div>`;
+        html += `<div class="sheet-cell footer-cell span-col-2">MEDIA</div>`;
         equipment.forEach(e => {
             html += `<div class="sheet-cell footer-cell" id="media-h1-${e.id}-l">-</div><div class="sheet-cell footer-cell" id="media-h1-${e.id}-h">-</div>`;
         });
@@ -1533,27 +1516,18 @@ const App = {
             { id: 'turbg', label: 'TURBINA G' }
         ];
 
-        let html = `<div class="sheet-table botos-horas">
-            <div class="sheet-cell sheet-header-cell span-row-2"></div>
-            <div class="sheet-cell sheet-header-cell span-row-2">FECHA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2"></div>`; // Separador vertical
+        let html = `<div class="sheet-table corredoira-horas hoja2">
+            <div class="sheet-cell sheet-header-cell span-row-2">DÍA</div>
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>`;
         equipment.forEach(e => { html += `<div class="sheet-cell sheet-header-cell span-col-2">${e.label}</div> `; });
         html += equipment.map(() => `<div class="sheet-cell sheet-header-cell">LECTURA</div><div class="sheet-cell sheet-header-cell">H.</div>`).join('');
 
         const monthKey = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}`;
         const initialLog = logs.find(l => l.fecha === `${monthKey}-00`) || {};
 
-        // Blank horizontal row
-        for (let i = 0; i < 22; i++) html += `<div class="sheet-cell"></div>`;
-
         // Initial Row (Day 00)
-        html += `<div class="sheet-cell initial-row-cell">-</div>`;
-        html += `<div class="sheet-cell date-cell">
-            <input type="text" class="row-input" data-date="${monthKey}-00" data-field="h2_fecha_manual" value="${initialLog.h2_fecha_manual || ''}" placeholder="INICIAL" >
-        </div> `;
+        html += `<div class="sheet-cell initial-row-cell">0</div>`;
         html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>`;
-        html += `<div class="sheet-cell"></div>`; // Separador vertical
         equipment.forEach(e => {
             html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${monthKey}-00" data-field="h2_${e.id}_l" value="${initialLog['h2_' + e.id + '_l'] || ''}" ></div>`;
             html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${monthKey}-00" data-field="h2_${e.id}_h" value="${initialLog['h2_' + e.id + '_h'] || ''}" ></div>`;
@@ -1565,23 +1539,19 @@ const App = {
             const log = logs.find(l => l.fecha === dateStr) || {};
             const isInvalidDay = d > daysInMonth;
 
-            html += `<div class="sheet-cell"></div>`;
-            html += `<div class="sheet-cell date-cell ${isInvalidDay ? 'disabled-row' : ''}">
-                <input type="text" class="row-input" data-date="${dateStr}" data-field="h2_fecha_manual" value="${log.h2_fecha_manual || ''}" placeholder="" ${isInvalidDay ? 'disabled' : ''}>
-            </div> `;
+            html += `<div class="sheet-cell date-cell ${isInvalidDay ? 'disabled-row' : ''}">${d}</div>`;
             html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
-            html += `<div class="sheet-cell"></div>`; // Separador vertical
             equipment.forEach(e => {
                 html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="h2_${e.id}_l" value="${log['h2_' + e.id + '_l'] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
                 html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="h2_${e.id}_h" value="${log['h2_' + e.id + '_h'] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
             });
         }
 
-        html += `<div class="sheet-cell footer-cell span-col-4">TOTAL</div>`;
+        html += `<div class="sheet-cell footer-cell span-col-2">TOTAL</div>`;
         equipment.forEach(e => {
             html += `<div class="sheet-cell footer-cell" id="total-h2-${e.id}-l">-</div><div class="sheet-cell footer-cell" id="total-h2-${e.id}-h">-</div>`;
         });
-        html += `<div class="sheet-cell footer-cell span-col-4">MEDIA</div>`;
+        html += `<div class="sheet-cell footer-cell span-col-2">MEDIA</div>`;
         equipment.forEach(e => {
             html += `<div class="sheet-cell footer-cell" id="media-h2-${e.id}-l">-</div><div class="sheet-cell footer-cell" id="media-h2-${e.id}-h">-</div>`;
         });
@@ -1597,27 +1567,18 @@ const App = {
             { id: 'recfb', label: 'REC. FANGOS B' }, { id: 'sobrenad', label: 'SOBRENADANTES' }
         ];
 
-        let html = `<div class="sheet-table botos-horas">
-            <div class="sheet-cell sheet-header-cell span-row-2"></div>
-            <div class="sheet-cell sheet-header-cell span-row-2">FECHA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2"></div>`; // Separador vertical
+        let html = `<div class="sheet-table corredoira-horas">
+            <div class="sheet-cell sheet-header-cell span-row-2">DÍA</div>
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>`;
         equipment.forEach(e => { html += `<div class="sheet-cell sheet-header-cell span-col-2">${e.label}</div> `; });
         html += equipment.map(() => `<div class="sheet-cell sheet-header-cell">LECTURA</div><div class="sheet-cell sheet-header-cell">H.</div>`).join('');
 
         const monthKey = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}`;
         const initialLog = logs.find(l => l.fecha === `${monthKey}-00`) || {};
 
-        // Blank horizontal row
-        for (let i = 0; i < 22; i++) html += `<div class="sheet-cell"></div>`;
-
         // Initial Row (Day 00)
-        html += `<div class="sheet-cell initial-row-cell">-</div>`;
-        html += `<div class="sheet-cell date-cell">
-            <input type="text" class="row-input" data-date="${monthKey}-00" data-field="h3_fecha_manual" value="${initialLog.h3_fecha_manual || ''}" placeholder="INICIAL" >
-        </div> `;
+        html += `<div class="sheet-cell initial-row-cell">0</div>`;
         html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>`;
-        html += `<div class="sheet-cell"></div>`; // Separador vertical
         equipment.forEach(e => {
             html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${monthKey}-00" data-field="h3_${e.id}_l" value="${initialLog['h3_' + e.id + '_l'] || ''}" ></div>`;
             html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${monthKey}-00" data-field="h3_${e.id}_h" value="${initialLog['h3_' + e.id + '_h'] || ''}" ></div>`;
@@ -1629,23 +1590,19 @@ const App = {
             const log = logs.find(l => l.fecha === dateStr) || {};
             const isInvalidDay = d > daysInMonth;
 
-            html += `<div class="sheet-cell"></div>`;
-            html += `<div class="sheet-cell date-cell ${isInvalidDay ? 'disabled-row' : ''}">
-                <input type="text" class="row-input" data-date="${dateStr}" data-field="h3_fecha_manual" value="${log.h3_fecha_manual || ''}" placeholder="" ${isInvalidDay ? 'disabled' : ''}>
-            </div> `;
+            html += `<div class="sheet-cell date-cell ${isInvalidDay ? 'disabled-row' : ''}">${d}</div>`;
             html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
-            html += `<div class="sheet-cell"></div>`; // Separador vertical
             equipment.forEach(e => {
                 html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="h3_${e.id}_l" value="${log['h3_' + e.id + '_l'] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
                 html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="h3_${e.id}_h" value="${log['h3_' + e.id + '_h'] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
             });
         }
 
-        html += `<div class="sheet-cell footer-cell span-col-4">TOTAL</div>`;
+        html += `<div class="sheet-cell footer-cell span-col-2">TOTAL</div>`;
         equipment.forEach(e => {
             html += `<div class="sheet-cell footer-cell" id="total-h3-${e.id}-l">-</div><div class="sheet-cell footer-cell" id="total-h3-${e.id}-h">-</div>`;
         });
-        html += `<div class="sheet-cell footer-cell span-col-4">MEDIA</div>`;
+        html += `<div class="sheet-cell footer-cell span-col-2">MEDIA</div>`;
         equipment.forEach(e => {
             html += `<div class="sheet-cell footer-cell" id="media-h3-${e.id}-l">-</div><div class="sheet-cell footer-cell" id="media-h3-${e.id}-h">-</div>`;
         });
