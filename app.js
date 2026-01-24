@@ -2203,7 +2203,7 @@ const App = {
     generatePDF(allData) {
         // Control de acceso para representantes
         const repCode = prompt("Acceso Restringido. Introduzca el código de Representante:");
-        if (repCode !== "2024") { 
+        if (repCode !== "2024") {
             alert("Acceso denegado. Solo el representante de la empresa puede realizar descargas.");
             return;
         }
@@ -2259,7 +2259,7 @@ const App = {
                     doc.setFontSize(14);
                     doc.setTextColor(0, 56, 101);
                     doc.text(`${station.replace(/_/g, ' ')} - ${sheet.name}`, 14, 15);
-                    
+
                     doc.setFontSize(8);
                     doc.setTextColor(100);
                     doc.text(`Exportado: ${new Date().toLocaleDateString()} - Representante Empresa`, 14, 21);
@@ -2295,6 +2295,7 @@ const App = {
             alert("Error al exportar a PDF.");
         }
     }
+};
 
 
 console.log('App version: 3.1 - Botos UI Refined');
