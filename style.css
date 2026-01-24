@@ -1,13 +1,17 @@
 :root {
-    --primary: #007AFF;
-    --primary-dark: #0056b3;
-    --bg: #0a0a0c;
-    --card-bg: #1c1c1e;
-    --text: #ffffff;
-    --text-muted: #8e8e93;
-    --border: #38383a;
-    --radius: 12px;
-    --gradient: linear-gradient(135deg, #007AFF 0%, #00C6FF 100%);
+    --primary: #003087;
+    /* Navy blue like image */
+    --primary-dark: #00205b;
+    --bg: #ffffff;
+    /* White background */
+    --card-bg: #f8f9fa;
+    --text: #000000;
+    /* Black text */
+    --text-muted: #495057;
+    --border: #000000;
+    /* Black lines */
+    --radius: 8px;
+    --gradient: linear-gradient(135deg, #003087 0%, #0056b3 100%);
 }
 
 * {
@@ -54,8 +58,7 @@ body {
 #login-view {
     justify-content: center;
     align-items: center;
-    background: radial-gradient(circle at top right, #007AFF22, transparent),
-        radial-gradient(circle at bottom left, #00C6FF11, transparent);
+    background: #ffffff;
 }
 
 .login-card {
@@ -64,8 +67,8 @@ body {
     border-radius: 24px;
     width: 100%;
     max-width: 400px;
-    border: 1px solid var(--border);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border: 1px solid #ced4da;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
@@ -101,8 +104,8 @@ body {
 }
 
 .employee-btn {
-    background: #2c2c2e;
-    border: 1px solid var(--border);
+    background: #ffffff;
+    border: 1px solid #ced4da;
     padding: 1.5rem 1rem;
     border-radius: 1rem;
     cursor: pointer;
@@ -112,7 +115,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-    color: white;
+    color: #333;
 }
 
 .employee-btn:hover {
@@ -138,15 +141,16 @@ body {
 
 /* Backup Section */
 .backup-section {
-    background: var(--card-bg);
+    background: #ffffff;
     padding: 2rem;
     border-radius: 20px;
     margin-bottom: 3rem;
-    border: 1px solid var(--border);
+    border: 1px solid #dee2e6;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .backup-section h3 {
@@ -329,16 +333,16 @@ header {
 
 .btn-secondary {
     padding: 8px 16px;
-    background: #2c2c2e;
-    border: 1px solid var(--border);
+    background: #f1f3f5;
+    border: 1px solid #ced4da;
     border-radius: 8px;
-    color: var(--text);
+    color: #495057;
     cursor: pointer;
     transition: background 0.2s;
 }
 
 .btn-secondary:hover {
-    background: #3a3a3c;
+    background: #e9ecef;
 }
 
 /* Forms */
@@ -346,11 +350,11 @@ header {
     max-width: 800px;
     width: 100%;
     margin: 0 auto;
-    background: var(--card-bg);
+    background: #ffffff;
     padding: 2.5rem;
     border-radius: 20px;
-    border: 1px solid var(--border);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid #dee2e6;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
 .form-header-info {
@@ -389,10 +393,10 @@ header {
     grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    background: #232326;
+    background: #f8f9fa;
     border-radius: 8px;
     font-size: 0.75rem;
-    color: var(--text-muted);
+    color: #495057;
     font-weight: 600;
     text-transform: uppercase;
     text-align: center;
@@ -403,20 +407,20 @@ header {
     grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 0.5rem;
     align-items: center;
-    background: #1c1c1e;
+    background: #ffffff;
     padding: 0.5rem 1rem;
     border-radius: 8px;
-    border: 1px solid #2c2c2e;
+    border: 1px solid #dee2e6;
     transition: background 0.2s;
 }
 
 .double-field-row:hover {
-    background: #252529;
+    background: #f8f9fa;
 }
 
 .double-field-row label {
     font-size: 0.9rem;
-    color: var(--text);
+    color: #212529;
     text-align: left;
     margin-bottom: 0;
 }
@@ -424,19 +428,19 @@ header {
 .double-field-row input {
     width: 100%;
     padding: 6px;
-    background: #2c2c2e;
-    border: 1px solid var(--border);
+    background: #ffffff;
+    border: 1px solid #ced4da;
     border-radius: 4px;
-    color: white;
+    color: #000000;
     font-size: 0.85rem;
     text-align: center;
 }
 
 .diff-display {
-    background: #232326;
+    background: #f1f3f5;
     border-radius: 4px;
     font-size: 0.85rem;
-    color: var(--primary);
+    color: #003087;
     display: flex;
     align-items: center;
     justify-content: center;
