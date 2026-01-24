@@ -953,37 +953,25 @@ const App = {
     renderGenericEnergiaContent(logs, station) {
         const monthKey = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}`;
         let html = `<div class="sheet-table botos-energia">
-            <!-- Order matching image: ACTIVA -> REACTIVA -> MAXIMETRO -->
-            <div class="sheet-cell sheet-header-cell span-row-2">DIA</div>
-            <div class="sheet-cell sheet-header-cell span-col-8">ENERGÍA ACTIVA</div>
-            <div class="sheet-cell sheet-header-cell span-col-8">ENERGÍA REACTIVA</div>
-            <div class="sheet-cell sheet-header-cell span-col-4">MAXIMETRO</div>
+            <!-- HEADER ROW 1: Sized for 21 columns total (1 DIA + 20 data) -->
+            <div class="sheet-cell sheet-header-cell span-row-2" style="background:#e3f2fd; border-bottom:2px solid #000;">DIA</div>
+            <div class="sheet-cell sheet-header-cell span-col-8" style="background:#fff3e0;">ENERGÍA ACTIVA (kWh)</div>
+            <div class="sheet-cell sheet-header-cell span-col-8" style="background:#f1f8e9;">ENERGÍA REACTIVA (kVArh)</div>
+            <div class="sheet-cell sheet-header-cell span-col-4" style="background:#fce4ec;">MAXÍMETRO (kW)</div>
 
-            <!-- ACTIVA Subheaders -->
-            <div class="sheet-cell sheet-header-cell">P1 1.18.1</div>
-            <div class="sheet-cell sheet-header-cell">P2 1.18.2</div>
-            <div class="sheet-cell sheet-header-cell">P3 1.18.3</div>
-            <div class="sheet-cell sheet-header-cell">P4 1.18.4</div>
-            <div class="sheet-cell sheet-header-cell">P5 1.18.5</div>
-            <div class="sheet-cell sheet-header-cell">P6 1.18.6</div>
-            <div class="sheet-cell sheet-header-cell">TOTAL 1.18.0</div>
-            <div class="sheet-cell sheet-header-cell">DIF</div>
+            <!-- HEADER ROW 2: Sub-labels -->
+            <div class="sheet-cell sheet-header-cell">P1 1.18.1</div><div class="sheet-cell sheet-header-cell">P2 1.18.2</div>
+            <div class="sheet-cell sheet-header-cell">P3 1.18.3</div><div class="sheet-cell sheet-header-cell">P4 1.18.4</div>
+            <div class="sheet-cell sheet-header-cell">P5 1.18.5</div><div class="sheet-cell sheet-header-cell">P6 1.18.6</div>
+            <div class="sheet-cell sheet-header-cell" style="color:#e65100;">TOTAL 1.18.0</div><div class="sheet-cell sheet-header-cell" style="background:#eee;">DIF</div>
             
-            <!-- REACTIVA Subheaders -->
-            <div class="sheet-cell sheet-header-cell">P1 1.58.1</div>
-            <div class="sheet-cell sheet-header-cell">P2 1.58.2</div>
-            <div class="sheet-cell sheet-header-cell">P3 1.58.3</div>
-            <div class="sheet-cell sheet-header-cell">P4 1.58.4</div>
-            <div class="sheet-cell sheet-header-cell">P5 1.58.5</div>
-            <div class="sheet-cell sheet-header-cell">P6 1.58.6</div>
-            <div class="sheet-cell sheet-header-cell">TOTAL 1.58.0</div>
-            <div class="sheet-cell sheet-header-cell">DIF</div>
+            <div class="sheet-cell sheet-header-cell">P1 1.58.1</div><div class="sheet-cell sheet-header-cell">P2 1.58.2</div>
+            <div class="sheet-cell sheet-header-cell">P3 1.58.3</div><div class="sheet-cell sheet-header-cell">P4 1.58.4</div>
+            <div class="sheet-cell sheet-header-cell">P5 1.58.5</div><div class="sheet-cell sheet-header-cell">P6 1.58.6</div>
+            <div class="sheet-cell sheet-header-cell" style="color:#2e7d32;">TOTAL 1.58.0</div><div class="sheet-cell sheet-header-cell" style="background:#eee;">DIF</div>
 
-            <!-- MAXIMETRO Subheaders -->
-            <div class="sheet-cell sheet-header-cell">P1 1.16.1</div>
-            <div class="sheet-cell sheet-header-cell">P2 1.16.2</div>
-            <div class="sheet-cell sheet-header-cell">P3 1.16.3</div>
-            <div class="sheet-cell sheet-header-cell">TOTAL 1.16.0</div>
+            <div class="sheet-cell sheet-header-cell">P.1.16.1</div><div class="sheet-cell sheet-header-cell">P.1.16.2</div>
+            <div class="sheet-cell sheet-header-cell">P.1.16.3</div><div class="sheet-cell sheet-header-cell" style="color:#c2185b;">TOTAL 1.16.0</div>
         `;
 
         const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
@@ -991,25 +979,26 @@ const App = {
             const dateStr = `${monthKey}-${String(d).padStart(2, '0')}`;
             const log = logs.find(l => l.fecha === dateStr) || {};
             const isDisabled = (d > daysInMonth && d !== 0);
-            const rowClass = (d === 0) ? 'initial-row-cell' : '';
+            const isInitial = (d === 0);
+            const rowStyle = isInitial ? 'style="background:#fff9c4; font-weight:bold;"' : '';
 
-            html += `<div class="sheet-cell ${rowClass} ${isDisabled ? 'disabled-day' : ''}">${d}</div>`;
+            html += `<div class="sheet-cell ${isDisabled ? 'disabled-day' : ''}" ${rowStyle}>${d}</div>`;
 
-            // ACTIVA inputs (8)
+            // ACTIVA (8 cells: 6 periods + Total + Dif)
             ['e_a_p1', 'e_a_p2', 'e_a_p3', 'e_a_p4', 'e_a_p5', 'e_a_p6', 'e_a_total'].forEach(f => {
-                html += `<div class="sheet-cell ${rowClass}"><input type="number" step="0.001" class="row-input" data-date="${dateStr}" data-field="${f}" value="${log[f] || ''}" ${isDisabled ? 'disabled' : ''}></div>`;
+                html += `<div class="sheet-cell ${isDisabled ? 'disabled-day' : ''}"><input type="number" step="0.001" class="row-input" data-date="${dateStr}" data-field="${f}" value="${log[f] || ''}" ${isDisabled ? 'disabled' : ''}></div>`;
             });
-            html += `<div class="sheet-cell ${rowClass}"><input type="number" class="row-input" data-date="${dateStr}" data-field="e_a_dif" value="${log.e_a_dif || ''}" disabled></div>`;
+            html += `<div class="sheet-cell" style="background:#fafafa;"><input type="number" class="row-input" data-date="${dateStr}" data-field="e_a_dif" value="${log.e_a_dif || ''}" disabled></div>`;
 
-            // REACTIVA inputs (8)
+            // REACTIVA (8 cells: 6 periods + Total + Dif)
             ['e_r_p1', 'e_r_p2', 'e_r_p3', 'e_r_p4', 'e_r_p5', 'e_r_p6', 'e_r_total'].forEach(f => {
-                html += `<div class="sheet-cell ${rowClass}"><input type="number" step="0.001" class="row-input" data-date="${dateStr}" data-field="${f}" value="${log[f] || ''}" ${isDisabled ? 'disabled' : ''}></div>`;
+                html += `<div class="sheet-cell ${isDisabled ? 'disabled-day' : ''}"><input type="number" step="0.001" class="row-input" data-date="${dateStr}" data-field="${f}" value="${log[f] || ''}" ${isDisabled ? 'disabled' : ''}></div>`;
             });
-            html += `<div class="sheet-cell ${rowClass}"><input type="number" class="row-input" data-date="${dateStr}" data-field="e_r_dif" value="${log.e_r_dif || ''}" disabled></div>`;
+            html += `<div class="sheet-cell" style="background:#fafafa;"><input type="number" class="row-input" data-date="${dateStr}" data-field="e_r_dif" value="${log.e_r_dif || ''}" disabled></div>`;
 
-            // MAXIMETRO inputs (4)
+            // MAXIMETRO (4 cells: 3 periods + Total)
             ['m_p1', 'm_p2', 'm_p3', 'm_total'].forEach(f => {
-                html += `<div class="sheet-cell ${rowClass}"><input type="number" step="0.001" class="row-input" data-date="${dateStr}" data-field="${f}" value="${log[f] || ''}" ${isDisabled ? 'disabled' : ''}></div>`;
+                html += `<div class="sheet-cell ${isDisabled ? 'disabled-day' : ''}"><input type="number" step="0.001" class="row-input" data-date="${dateStr}" data-field="${f}" value="${log[f] || ''}" ${isDisabled ? 'disabled' : ''}></div>`;
             });
         }
         return html + `</div>`;
@@ -1039,6 +1028,14 @@ const App = {
                 this.saveSingleField(date, field, val);
 
                 if (field === 'caudal_lect') this.recalculateDailyConsumption();
+
+                // If in an energy sheet, recalculate the DIF automatically
+                if (this.currentBotosTab === 'hoja_energia' || this.currentCorredoiraTab === 'hoja_energia' || this.currentVilatuxeTab === 'hoja2') {
+                    if (field === 'e_a_total' || field === 'e_r_total') {
+                        this.recalculateEnergiaDifs(this.currentStation === 'EDAR_BOTOS' ? 'EDAR_BOTOS' : (this.currentStation === 'EDAR_CORREDOIRA' ? 'EDAR_CORREDOIRA' : 'VILATUXE'));
+                    }
+                }
+
                 if (['BOMBEO_BOTOS', 'CATASOS', 'VILATUXE'].includes(this.currentStation) && ['b1', 'b2', 'b3'].includes(field)) {
                     if (this.currentStation === 'BOMBEO_BOTOS') this.recalculateBombeoBotosDifs();
                     if (this.currentStation === 'CATASOS') this.recalculateCatasosDifs();
@@ -2266,4 +2263,5 @@ const App = {
     }
 };
 
+console.log('App version: 3.1 - Botos UI Refined');
 App.init();
