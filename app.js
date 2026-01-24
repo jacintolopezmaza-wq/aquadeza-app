@@ -257,7 +257,7 @@ const App = {
                     <div class="control-pill">
                         <label>AÑO</label>
                         <select id="year-select">
-                            ${[2024, 2025, 2026].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
+                            ${[2024, 2025, 2026, 2027, 2028, 2029, 2030].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
                         </select>
                     </div>
                 </div>
@@ -331,7 +331,7 @@ const App = {
                     <div class="control-pill">
                         <label>AÑO</label>
                         <select id="year-select">
-                            ${[2024, 2025, 2026].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
+                            ${[2024, 2025, 2026, 2027, 2028, 2029, 2030].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
                         </select>
                     </div>
                 </div>
@@ -504,7 +504,7 @@ const App = {
                     <div class="control-pill">
                         <label>AÑO</label>
                         <select id="year-select">
-                            ${[2024, 2025, 2026].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
+                            ${[2024, 2025, 2026, 2027, 2028, 2029, 2030].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
                         </select>
                     </div>
                 </div>
@@ -1284,7 +1284,7 @@ const App = {
                     <div class="control-pill">
                         <label>AÑO</label>
                         <select id="year-select">
-                            ${[2024, 2025, 2026].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
+                            ${[2024, 2025, 2026, 2027, 2028, 2029, 2030].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
                         </select>
                     </div>
                 </div>
@@ -1719,7 +1719,7 @@ const App = {
                     <div class="control-pill">
                         <label>AÑO</label>
                         <select id="year-select">
-                            ${[2024, 2025, 2026].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
+                            ${[2024, 2025, 2026, 2027, 2028, 2029, 2030].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
                         </select>
                     </div>
                 </div>
@@ -2058,7 +2058,7 @@ const App = {
                     <div class="control-pill">
                         <label>AÑO</label>
                         <select id="year-select">
-                            ${[2024, 2025, 2026].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
+                            ${[2024, 2025, 2026, 2027, 2028, 2029, 2030].map(y => `<option value="${y}" ${y === this.currentYear ? 'selected' : ''}>${y}</option>`).join('')}
                         </select>
                     </div>
                 </div>
@@ -2165,9 +2165,12 @@ const App = {
     async exportAllData(format) {
         const stations = ['ETAP', 'CATASOS', 'VILATUXE', 'BOMBEO_BOTOS', 'EDAR_BOTOS', 'EDAR_CORREDOIRA'];
         const allData = {};
+        const monthKey = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}`;
 
         stations.forEach(s => {
-            allData[s] = JSON.parse(localStorage.getItem(`logs_${s}`) || '[]');
+            const logs = JSON.parse(localStorage.getItem(`logs_${s}`) || '[]');
+            // Filter by selected year and month
+            allData[s] = logs.filter(l => l.fecha && l.fecha.startsWith(monthKey));
         });
 
         if (format === 'excel') {
@@ -2177,92 +2180,99 @@ const App = {
         }
     },
 
+    getSheetDefinitions(station) {
+        if (station === 'EDAR_CORREDOIRA') {
+            return [
+                { name: 'DIARIO', headers: ['Día', 'Hora', 'Aire', 'Agua', 'Precip.', 'Lectura', 'm³/día', 'Oxíg.', 'V.Fango', 'Desb.', 'Arenas', 'Fangos', 'Punta', 'Valle', 'Llano', 'Reactiva', 'Obs.'], keys: ['fecha', 'hora', 'taire', 'tagua', 'precipitacion', 'caudal_lect', 'caudal_m3d', 'oxigeno', 'vol_fango', 'res_desbaste', 'res_arenas', 'res_fangos', 'cons_punta', 'cons_valle', 'cons_llano', 'reactiva', 'observaciones'] },
+                { name: 'ENERGIA', headers: ['Día', 'P1 Act', 'P2 Act', 'P3 Act', 'P4 Act', 'P5 Act', 'P6 Act', 'Total Act', 'Dif Act', 'P1 Reac', 'P2 Reac', 'P3 Reac', 'P4 Reac', 'P5 Reac', 'P6 Reac', 'Total Reac', 'Dif Reac', 'M1', 'M2', 'M3', 'M Total'], keys: ['fecha', 'e_a_p1', 'e_a_p2', 'e_a_p3', 'e_a_p4', 'e_a_p5', 'e_a_p6', 'e_a_total', 'e_a_dif', 'e_r_p1', 'e_r_p2', 'e_r_p3', 'e_r_p4', 'e_r_p5', 'e_r_p6', 'e_r_total', 'e_r_dif', 'm_p1', 'm_p2', 'm_p3', 'm_total'] },
+                { name: 'HORAS 1', headers: ['Día', 'Hora', 'Cinta L', 'Cinta H', 'Desar L', 'Desar H', 'B.Arenas L', 'B.Arenas H', 'Aerad L', 'Aerad H', 'Clasif L', 'Clasif H', 'Vaciad L', 'Vaciad H', 'Espes L', 'Espes H', 'Filtro L', 'Filtro H'], keys: ['fecha', 'hora', 'h1_cinta_l', 'h1_cinta_h', 'h1_desar_l', 'h1_desar_h', 'h1_barenas_l', 'h1_barenas_h', 'h1_aerad_l', 'h1_aerad_h', 'h1_careas_l', 'h1_careas_h', 'h1_vaciados_l', 'h1_vaciados_h', 'h1_espesador_l', 'h1_espesador_h', 'h1_filtro_l', 'h1_filtro_h'] },
+                { name: 'HORAS 2', headers: ['Día', 'Hora', 'Turb A L', 'Turb A H', 'Turb B L', 'Turb B H', 'Turb C L', 'Turb C H', 'Turb D L', 'Turb D H', 'Turb E L', 'Turb E H', 'Turb F L', 'Turb F H', 'Turb G L', 'Turb G H'], keys: ['fecha', 'hora', 'h2_turba_l', 'h2_turba_h', 'h2_turbb_l', 'h2_turbb_h', 'h2_turbc_l', 'h2_turbc_h', 'h2_turbd_l', 'h2_turbd_h', 'h2_turbe_l', 'h2_turbe_h', 'h2_turbf_l', 'h2_turbf_h', 'h2_turbg_l', 'h2_turbg_h'] },
+                { name: 'HORAS 3', headers: ['Día', 'Hora', 'Agit A L', 'Agit A H', 'Agit B L', 'Agit B H', 'Rec Biol A L', 'Rec Biol A H', 'Rec Biol B L', 'Rec Biol B H', 'Flotant L', 'Flotant H', 'Rec Fan A L', 'Rec Fan A H', 'Rec Fan B L', 'Rec Fan B H', 'Sobrenad L', 'Sobrenad H'], keys: ['fecha', 'hora', 'h3_agita_l', 'h3_agita_h', 'h3_agitb_l', 'h3_agitb_h', 'h3_recba_l', 'h3_recba_h', 'h3_recbb_l', 'h3_recbb_h', 'h3_flotants_l', 'h3_flotants_h', 'h3_recfa_l', 'h3_recfa_h', 'h3_recfb_l', 'h3_recfb_h', 'h3_sobrenad_l', 'h3_sobrenad_h'] }
+            ];
+        } else if (station === 'EDAR_BOTOS') {
+            return [
+                { name: 'DIARIO', headers: ['Día', 'Hora', 'Aire', 'Agua', 'Precip.', 'Lectura', 'm³/día', 'Desb.', 'Fangos', 'PAX', 'Poli.', 'Punta', 'Valle', 'Llano', 'Reactiva', 'Obs.'], keys: ['fecha', 'hora', 'taire', 'tagua', 'precipitacion', 'caudal_lect', 'caudal_m3d', 'desbaste', 'fangos_filtro', 'pax', 'polielectrolito', 'punta', 'valle', 'llano', 'reactiva', 'observaciones'] },
+                { name: 'HORAS 1', headers: ['Día', 'Hora', 'B1 L', 'B1 H', 'B2 L', 'B2 H', 'Achique L', 'Achique H', 'Masko L', 'Masko H', 'Agit L', 'Agit H', 'Parrilla L', 'Parrilla H', 'Barred L', 'Barred H', 'Tornillo L', 'Tornillo H', 'Fango L', 'Fango H'], keys: ['fecha', 'hora', 'h2_b1_l', 'h2_b1_h', 'h2_b2_l', 'h2_b2_h', 'h2_achique_l', 'h2_achique_h', 'h2_masko_l', 'h2_masko_h', 'h2_agitador_l', 'h2_agitador_h', 'h2_parrilla_l', 'h2_parrilla_h', 'h2_barredera_l', 'h2_barredera_h', 'h2_tornillo_l', 'h2_tornillo_h', 'h2_fango_l', 'h2_fango_h'] },
+                { name: 'HORAS 2', headers: ['Día', 'Hora', 'DAC1 L', 'DAC1 H', 'DAC2 L', 'DAC2 H', 'Comp L', 'Comp H', 'Floc1 L', 'Floc1 H', 'Floc2 L', 'Floc2 H', 'Coag1 L', 'Coag1 H', 'Coag2 L', 'Coag2 H', 'Sopl1 L', 'Sopl1 H', 'Sopl2 L', 'Sopl2 H'], keys: ['fecha', 'hora', 'h3_dac1_l', 'h3_dac1_h', 'h3_dac2_l', 'h3_dac2_h', 'h3_comp_l', 'h3_comp_h', 'h3_floc1_l', 'h3_floc1_h', 'h3_floc2_l', 'h3_floc2_h', 'h3_coag1_l', 'h3_coag1_h', 'h3_coag2_l', 'h3_coag2_h', 'h3_sopl1_l', 'h3_sopl1_h', 'h3_sopl2_l', 'h3_sopl2_h'] },
+                { name: 'HORAS 3', headers: ['Día', 'Hora', 'Mono L', 'Mono H', 'Poli L', 'Poli H', 'Agit L', 'Agit H', 'Banda L', 'Banda H', 'V1 L', 'V1 H', 'V2 L', 'V2 H', 'V3 L', 'V3 H', 'V4 L', 'V4 H', 'V5 L', 'V5 H'], keys: ['fecha', 'hora', 'h4_mono_l', 'h4_mono_h', 'h4_poli_l', 'h4_poli_h', 'h4_agit_l', 'h4_agit_h', 'h4_banda_l', 'h4_banda_h', 'h4_v1_l', 'h4_v1_h', 'h4_v2_l', 'h4_v2_h', 'h4_v3_l', 'h4_v3_h', 'h4_v4_l', 'h4_v4_h', 'h4_v5_l', 'h4_v5_h'] },
+                { name: 'ENERGIA', headers: ['Día', 'P1 Act', 'P2 Act', 'P3 Act', 'P4 Act', 'P5 Act', 'P6 Act', 'Total Act', 'Dif Act', 'P1 Reac', 'P2 Reac', 'P3 Reac', 'P4 Reac', 'P5 Reac', 'P6 Reac', 'Total Reac', 'Dif Reac', 'M1', 'M2', 'M3', 'M Total'], keys: ['fecha', 'e_a_p1', 'e_a_p2', 'e_a_p3', 'e_a_p4', 'e_a_p5', 'e_a_p6', 'e_a_total', 'e_a_dif', 'e_r_p1', 'e_r_p2', 'e_r_p3', 'e_r_p4', 'e_r_p5', 'e_r_p6', 'e_r_total', 'e_r_dif', 'm_p1', 'm_p2', 'm_p3', 'm_total'] }
+            ];
+        } else if (station === 'ETAP') {
+            return [
+                { name: 'HOJA 1', headers: ['Día', 'Hora', 'Entrada', 'Dif', 'Salida', 'Dif', 'P1.18.1', 'P1.18.2', 'P1.18.3', 'P1.18.4', 'P1.18.5', 'P1.18.6', 'P1.18.0'], keys: ['fecha', 'hora', 'p1182_entrada', 'entrada_dif', 'salida_caudal_val', 'salida_caudal_dif', 'p1181', 'p1182', 'p1183', 'p1184', 'p1185', 'p1186', 'p1180'] },
+                { name: 'HOJA 2', headers: ['Día', 'Hora', 'P1.58.1', 'P1.58.2', 'P1.58.3', 'P1.58.4', 'P1.58.5', 'P1.58.6', 'P1.58.0', 'P1.16.1', 'P1.16.2', 'P1.16.3', 'P1.16.4', 'P1.16.5', 'P1.16.6', 'P1.16.0'], keys: ['fecha', 'hora', 'p1581', 'p1582', 'p1583', 'p1584', 'p1585', 'p1586', 'p1580', 'p1161', 'p1162', 'p1163', 'p1164', 'p1165', 'p1166', 'p1160'] },
+                { name: 'HOJA 3', headers: ['Día', 'Hora', 'Altura', 'Pos', 'Pre', 'Poli', 'Almi', 'Sosa', 'pH', 'Turbid', 'Color', 'Ammon', 'Prep.', 'Stock H', 'Stock P', 'Stock A', 'Stock S'], keys: ['fecha', 'hora', 'altura_etap', 'dosif_pos', 'dosif_pre', 'dosif_poli', 'dosif_almi', 'dosif_sosa', 'ph_salida', 'turb_salida', 'color_salida', 'amonio_salida', 'prep_react_amonio', 'stock_hipo', 'stock_poli', 'stock_almi', 'stock_sosa'] },
+                { name: 'HOJA 4', headers: ['Día', 'Hora', 'CL Lib', 'CL Comb', 'L1 Alt', 'L1 CL', 'L2 Alt', 'L2 CL', 'L2 Hipo', 'L2 Dil', 'M1', 'Dif', 'M2', 'Dif', 'M3', 'Dif', 'B1', 'Dif', 'B2', 'Dif'], keys: ['fecha', 'hora', 'cl_lib_etap', 'cl_comb_etap', 'lag1_alt', 'lag1_cl', 'lag2_alt', 'lag2_cl', 'lag2_hipo', 'lag2_dil', 'b_etap_m1', 'b_etap_dif1', 'b_etap_m2', 'b_etap_dif2', 'b_etap_m3', 'b_etap_dif3', 'b_lag2_b1', 'b_lag2_difb1', 'b_lag2_b2', 'b_lag2_difb2'] },
+                { name: 'HOJA 5', headers: ['Día', 'Hora', 'L1 Cont', 'B1', 'Dif', 'B2', 'Dif', 'B3', 'Dif', 'Anal Cl', 'Turb E', 'Turb S', 'pH S', 'pH T', 'Ammon'], keys: ['fecha', 'hora', 'lag1_contador', 'b_lag1_b1', 'b_lag1_difb1', 'b_lag1_b2', 'b_lag1_difb2', 'b_lag1_b3', 'b_lag1_difb3', 'f_anal_cl', 'f_turb_entr', 'f_turb_sal', 'f_ph_sal', 'f_ph_trat', 'f_amonio'] }
+            ];
+        } else if (station === 'BOMBEO_BOTOS' || station === 'CATASOS' || station === 'VILATUXE') {
+            return [
+                { name: 'HOJA 1', headers: ['Día', 'Hora', 'B1', 'B1 Dif', 'B2', 'B2 Dif', 'B3', 'B3 Dif', 'P1.18.1', 'P1.18.2', 'P1.18.3', 'P1.18.4', 'P1.18.5', 'P1.18.6', 'P1.18.0'], keys: ['fecha', 'hora', 'b1', 'b1_dif', 'b2', 'b2_dif', 'b3', 'b3_dif', 'p1181', 'p1182', 'p1183', 'p1184', 'p1185', 'p1186', 'p1180'] },
+                { name: 'HOJA 2', headers: ['Día', 'Hora', 'P1.58.1', 'P1.58.2', 'P1.58.3', 'P1.58.4', 'P1.58.5', 'P1.58.6', 'P1.58.0', 'P1.16.1', 'P1.16.2', 'P1.16.3', 'P1.16.4', 'P1.16.5', 'P1.16.6', 'P1.16.0'], keys: ['fecha', 'hora', 'p1581', 'p1582', 'p1583', 'p1584', 'p1585', 'p1586', 'p1580', 'p1161', 'p1162', 'p1163', 'p1164', 'p1165', 'p1166', 'p1160'] }
+            ];
+        }
+        return [];
+    },
+
     generateExcel(allData) {
         try {
             const wb = XLSX.utils.book_new();
             Object.keys(allData).forEach(station => {
-                let stationData = allData[station];
-                if (stationData && stationData.length > 0) {
-                    // Clean and sort data by date before export
-                    const cleanedData = stationData.map(entry => {
-                        const { ...rest } = entry;
-                        return rest;
-                    }).sort((a, b) => (a.fecha || '').localeCompare(b.fecha || ''));
+                const logs = allData[station];
+                const sheetDefs = this.getSheetDefinitions(station);
 
-                    const ws = XLSX.utils.json_to_sheet(cleanedData);
-                    XLSX.utils.book_append_sheet(wb, ws, station.substring(0, 31)); // sheet names limit
-                }
+                sheetDefs.forEach(def => {
+                    const aoaData = [def.headers]; // Add headers first
+
+                    // Sort logs by date correctly
+                    const sortedLogs = logs.sort((a, b) => (a.fecha || '').localeCompare(b.fecha || ''));
+
+                    sortedLogs.forEach(row => {
+                        const rowArray = def.keys.map(key => {
+                            let val = row[key];
+                            if (key === 'fecha' && val && val.includes('-')) {
+                                const day = val.split('-').pop();
+                                return day === '00' ? 'INICIAL' : parseInt(day);
+                            }
+                            if (val === undefined || val === null || val === '') return '-';
+                            return typeof val === 'number' ? (Number.isInteger(val) ? val : parseFloat(val.toFixed(2))) : val;
+                        });
+                        aoaData.push(rowArray);
+                    });
+
+                    const ws = XLSX.utils.aoa_to_sheet(aoaData);
+                    const safeSheetName = `${station.substring(0, 10)}_${def.name.substring(0, 15)}`.substring(0, 31);
+                    XLSX.utils.book_append_sheet(wb, ws, safeSheetName);
+                });
             });
-            XLSX.writeFile(wb, `AQUADEZA_Copia_${new Date().toISOString().split('T')[0]}.xlsx`);
+            XLSX.writeFile(wb, `REGISTROS_AQUADEZA_${this.currentYear}_${String(this.currentMonth + 1).padStart(2, '0')}.xlsx`);
         } catch (error) {
             console.error("Excel Export Error:", error);
-            alert("Error al exportar a Excel. Por favor, revisa la consola.");
+            alert("Error al exportar a Excel.");
         }
     },
 
     generatePDF(allData) {
-        // Control de acceso para representantes
-        const repCode = prompt("Acceso Restringido. Introduzca el código de Representante:");
-        if (repCode !== "2024") {
-            alert("Acceso denegado. Solo el representante de la empresa puede realizar descargas.");
-            return;
-        }
-
         try {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF('l', 'mm', 'a4');
             let firstPage = true;
 
-            const stations = Object.keys(allData);
-
-            stations.forEach(station => {
+            Object.keys(allData).forEach(station => {
                 const logs = allData[station];
-                if (!logs || logs.length === 0) return;
+                const sheetDefs = this.getSheetDefinitions(station);
 
-                let sheets = [];
-
-                if (station === 'EDAR_CORREDOIRA') {
-                    sheets = [
-                        { name: 'DIARIO', headers: ['Día', 'Hora', 'Aire', 'Agua', 'Precip.', 'Lectura', 'm³/día', 'Oxíg.', 'V.Fango', 'Desb.', 'Arenas', 'Fangos', 'Punta', 'Valle', 'Llano', 'Reactiva', 'Obs.'], keys: ['fecha', 'hora', 'taire', 'tagua', 'precipitacion', 'caudal_lect', 'caudal_m3d', 'oxigeno', 'vol_fango', 'res_desbaste', 'res_arenas', 'res_fangos', 'cons_punta', 'cons_valle', 'cons_llano', 'reactiva', 'observaciones'] },
-                        { name: 'ENERGIA', headers: ['Día', 'P1 Act', 'P2 Act', 'P3 Act', 'P4 Act', 'P5 Act', 'P6 Act', 'Total Act', 'Dif Act', 'P1 Reac', 'P2 Reac', 'P3 Reac', 'P4 Reac', 'P5 Reac', 'P6 Reac', 'Total Reac', 'Dif Reac', 'M1', 'M2', 'M3', 'M Total'], keys: ['fecha', 'e_a_p1', 'e_a_p2', 'e_a_p3', 'e_a_p4', 'e_a_p5', 'e_a_p6', 'e_a_total', 'e_a_dif', 'e_r_p1', 'e_r_p2', 'e_r_p3', 'e_r_p4', 'e_r_p5', 'e_r_p6', 'e_r_total', 'e_r_dif', 'm_p1', 'm_p2', 'm_p3', 'm_total'] },
-                        { name: 'HORAS 1', headers: ['Día', 'Hora', 'Cinta L', 'Cinta H', 'Desar L', 'Desar H', 'B.Arenas L', 'B.Arenas H', 'Aerad L', 'Aerad H', 'Clasif L', 'Clasif H', 'Vaciad L', 'Vaciad H', 'Espes L', 'Espes H', 'Filtro L', 'Filtro H'], keys: ['fecha', 'hora', 'h1_cinta_l', 'h1_cinta_h', 'h1_desar_l', 'h1_desar_h', 'h1_barenas_l', 'h1_barenas_h', 'h1_aerad_l', 'h1_aerad_h', 'h1_careas_l', 'h1_careas_h', 'h1_vaciados_l', 'h1_vaciados_h', 'h1_espesador_l', 'h1_espesador_h', 'h1_filtro_l', 'h1_filtro_h'] },
-                        { name: 'HORAS 2', headers: ['Día', 'Hora', 'Turb A L', 'Turb A H', 'Turb B L', 'Turb B H', 'Turb C L', 'Turb C H', 'Turb D L', 'Turb D H', 'Turb E L', 'Turb E H', 'Turb F L', 'Turb F H', 'Turb G L', 'Turb G H'], keys: ['fecha', 'hora', 'h2_turba_l', 'h2_turba_h', 'h2_turbb_l', 'h2_turbb_h', 'h2_turbc_l', 'h2_turbc_h', 'h2_turbd_l', 'h2_turbd_h', 'h2_turbe_l', 'h2_turbe_h', 'h2_turbf_l', 'h2_turbf_h', 'h2_turbg_l', 'h2_turbg_h'] },
-                        { name: 'HORAS 3', headers: ['Día', 'Hora', 'Agit A L', 'Agit A H', 'Agit B L', 'Agit B H', 'Rec Biol A L', 'Rec Biol A H', 'Rec Biol B L', 'Rec Biol B H', 'Flotant L', 'Flotant H', 'Rec Fan A L', 'Rec Fan A H', 'Rec Fan B L', 'Rec Fan B H', 'Sobrenad L', 'Sobrenad H'], keys: ['fecha', 'hora', 'h3_agita_l', 'h3_agita_h', 'h3_agitb_l', 'h3_agitb_h', 'h3_recba_l', 'h3_recba_h', 'h3_recbb_l', 'h3_recbb_h', 'h3_flotants_l', 'h3_flotants_h', 'h3_recfa_l', 'h3_recfa_h', 'h3_recfb_l', 'h3_recfb_h', 'h3_sobrenad_l', 'h3_sobrenad_h'] }
-                    ];
-                } else if (station === 'EDAR_BOTOS') {
-                    sheets = [
-                        { name: 'DIARIO', headers: ['Día', 'Hora', 'Aire', 'Agua', 'Precip.', 'Lectura', 'm³/día', 'Desb.', 'Fangos', 'PAX', 'Poli.', 'Punta', 'Valle', 'Llano', 'Reactiva', 'Obs.'], keys: ['fecha', 'hora', 'taire', 'tagua', 'precipitacion', 'caudal_lect', 'caudal_m3d', 'desbaste', 'fangos_filtro', 'pax', 'polielectrolito', 'punta', 'valle', 'llano', 'reactiva', 'observaciones'] },
-                        { name: 'HORAS 1', headers: ['Día', 'Hora', 'B1 L', 'B1 H', 'B2 L', 'B2 H', 'Achique L', 'Achique H', 'Masko L', 'Masko H', 'Agit L', 'Agit H', 'Parrilla L', 'Parrilla H', 'Barred L', 'Barred H', 'Tornillo L', 'Tornillo H', 'Fango L', 'Fango H'], keys: ['fecha', 'hora', 'h2_b1_l', 'h2_b1_h', 'h2_b2_l', 'h2_b2_h', 'h2_achique_l', 'h2_achique_h', 'h2_masko_l', 'h2_masko_h', 'h2_agitador_l', 'h2_agitador_h', 'h2_parrilla_l', 'h2_parrilla_h', 'h2_barredera_l', 'h2_barredera_h', 'h2_tornillo_l', 'h2_tornillo_h', 'h2_fango_l', 'h2_fango_h'] },
-                        { name: 'HORAS 2', headers: ['Día', 'Hora', 'DAC1 L', 'DAC1 H', 'DAC2 L', 'DAC2 H', 'Comp L', 'Comp H', 'Floc1 L', 'Floc1 H', 'Floc2 L', 'Floc2 H', 'Coag1 L', 'Coag1 H', 'Coag2 L', 'Coag2 H', 'Sopl1 L', 'Sopl1 H', 'Sopl2 L', 'Sopl2 H'], keys: ['fecha', 'hora', 'h3_dac1_l', 'h3_dac1_h', 'h3_dac2_l', 'h3_dac2_h', 'h3_comp_l', 'h3_comp_h', 'h3_floc1_l', 'h3_floc1_h', 'h3_floc2_l', 'h3_floc2_h', 'h3_coag1_l', 'h3_coag1_h', 'h3_coag2_l', 'h3_coag2_h', 'h3_sopl1_l', 'h3_sopl1_h', 'h3_sopl2_l', 'h3_sopl2_h'] },
-                        { name: 'HORAS 3', headers: ['Día', 'Hora', 'Mono L', 'Mono H', 'Poli L', 'Poli H', 'Agit L', 'Agit H', 'Banda L', 'Banda H', 'V1 L', 'V1 H', 'V2 L', 'V2 H', 'V3 L', 'V3 H', 'V4 L', 'V4 H', 'V5 L', 'V5 H'], keys: ['fecha', 'hora', 'h4_mono_l', 'h4_mono_h', 'h4_poli_l', 'h4_poli_h', 'h4_agit_l', 'h4_agit_h', 'h4_banda_l', 'h4_banda_h', 'h4_v1_l', 'h4_v1_h', 'h4_v2_l', 'h4_v2_h', 'h4_v3_l', 'h4_v3_h', 'h4_v4_l', 'h4_v4_h', 'h4_v5_l', 'h4_v5_h'] },
-                        { name: 'ENERGIA', headers: ['Día', 'P1 Act', 'P2 Act', 'P3 Act', 'P4 Act', 'P5 Act', 'P6 Act', 'Total Act', 'Dif Act', 'P1 Reac', 'P2 Reac', 'P3 Reac', 'P4 Reac', 'P5 Reac', 'P6 Reac', 'Total Reac', 'Dif Reac', 'M1', 'M2', 'M3', 'M Total'], keys: ['fecha', 'e_a_p1', 'e_a_p2', 'e_a_p3', 'e_a_p4', 'e_a_p5', 'e_a_p6', 'e_a_total', 'e_a_dif', 'e_r_p1', 'e_r_p2', 'e_r_p3', 'e_r_p4', 'e_r_p5', 'e_r_p6', 'e_r_total', 'e_r_dif', 'm_p1', 'm_p2', 'm_p3', 'm_total'] }
-                    ];
-                } else if (station === 'ETAP') {
-                    sheets = [
-                        { name: 'HOJA 1', headers: ['Día', 'Hora', 'Entrada', 'Dif', 'Salida', 'Dif', 'P1.18.1', 'P1.18.2', 'P1.18.3', 'P1.18.4', 'P1.18.5', 'P1.18.6', 'P1.18.0'], keys: ['fecha', 'hora', 'p1182_entrada', 'entrada_dif', 'salida_caudal_val', 'salida_caudal_dif', 'p1181', 'p1182', 'p1183', 'p1184', 'p1185', 'p1186', 'p1180'] },
-                        { name: 'HOJA 2', headers: ['Día', 'Hora', 'P1.58.1', 'P1.58.2', 'P1.58.3', 'P1.58.4', 'P1.58.5', 'P1.58.6', 'P1.58.0', 'P1.16.1', 'P1.16.2', 'P1.16.3', 'P1.16.4', 'P1.16.5', 'P1.16.6', 'P1.16.0'], keys: ['fecha', 'hora', 'p1581', 'p1582', 'p1583', 'p1584', 'p1585', 'p1586', 'p1580', 'p1161', 'p1162', 'p1163', 'p1164', 'p1165', 'p1166', 'p1160'] },
-                        { name: 'HOJA 3', headers: ['Día', 'Hora', 'Altura', 'Pos', 'Pre', 'Poli', 'Almi', 'Sosa', 'pH', 'Turbid', 'Color', 'Ammon', 'Prep.', 'Stock H', 'Stock P', 'Stock A', 'Stock S'], keys: ['fecha', 'hora', 'altura_etap', 'dosif_pos', 'dosif_pre', 'dosif_poli', 'dosif_almi', 'dosif_sosa', 'ph_salida', 'turb_salida', 'color_salida', 'amonio_salida', 'prep_react_amonio', 'stock_hipo', 'stock_poli', 'stock_almi', 'stock_sosa'] },
-                        { name: 'HOJA 4', headers: ['Día', 'Hora', 'CL Lib', 'CL Comb', 'L1 Alt', 'L1 CL', 'L2 Alt', 'L2 CL', 'L2 Hipo', 'L2 Dil', 'M1', 'Dif', 'M2', 'Dif', 'M3', 'Dif', 'B1', 'Dif', 'B2', 'Dif'], keys: ['fecha', 'hora', 'cl_lib_etap', 'cl_comb_etap', 'lag1_alt', 'lag1_cl', 'lag2_alt', 'lag2_cl', 'lag2_hipo', 'lag2_dil', 'b_etap_m1', 'b_etap_dif1', 'b_etap_m2', 'b_etap_dif2', 'b_etap_m3', 'b_etap_dif3', 'b_lag2_b1', 'b_lag2_difb1', 'b_lag2_b2', 'b_lag2_difb2'] },
-                        { name: 'HOJA 5', headers: ['Día', 'Hora', 'L1 Cont', 'B1', 'Dif', 'B2', 'Dif', 'B3', 'Dif', 'Anal Cl', 'Turb E', 'Turb S', 'pH S', 'pH T', 'Ammon'], keys: ['fecha', 'hora', 'lag1_contador', 'b_lag1_b1', 'b_lag1_difb1', 'b_lag1_b2', 'b_lag1_difb2', 'b_lag1_b3', 'b_lag1_difb3', 'f_anal_cl', 'f_turb_entr', 'f_turb_sal', 'f_ph_sal', 'f_ph_trat', 'f_amonio'] }
-                    ];
-                } else if (station === 'BOMBEO_BOTOS' || station === 'CATASOS' || station === 'VILATUXE') {
-                    sheets = [
-                        { name: 'BOMBAS Y ACTIVA', headers: ['Día', 'Hora', 'B1', 'B1 Dif', 'B2', 'B2 Dif', 'B3', 'B3 Dif', 'P 1.18.1', 'P 1.18.2', 'P 1.18.3', 'P 1.18.4', 'P 1.18.5', 'P 1.18.6', 'P 1.18.0'], keys: ['fecha', 'hora', 'b1', 'b1_dif', 'b2', 'b2_dif', 'b3', 'b3_dif', 'p1181', 'p1182', 'p1183', 'p1184', 'p1185', 'p1186', 'p1180'] },
-                        { name: 'REACTIVA Y MAXIMETRO', headers: ['Día', 'Hora', 'P1.58.1', 'P1.58.2', 'P1.58.3', 'P1.58.4', 'P1.58.5', 'P1.58.6', 'P1.58.0', 'P1.16.1', 'P1.16.2', 'P1.16.3', 'P1.16.4', 'P1.16.5', 'P1.16.6', 'P1.16.0'], keys: ['fecha', 'hora', 'p1581', 'p1582', 'p1583', 'p1584', 'p1585', 'p1586', 'p1580', 'p1161', 'p1162', 'p1163', 'p1164', 'p1165', 'p1166', 'p1160'] }
-                    ];
-                }
-
-                sheets.forEach(sheet => {
+                sheetDefs.forEach(sheet => {
                     if (!firstPage) doc.addPage();
                     firstPage = false;
 
                     doc.setFontSize(14);
                     doc.setTextColor(0, 56, 101);
-                    doc.text(`${station.replace(/_/g, ' ')} - ${sheet.name}`, 14, 15);
+                    doc.text(`${station.replace(/_/g, ' ')} - ${sheet.name} (${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')})`, 14, 15);
 
                     doc.setFontSize(8);
                     doc.setTextColor(100);
-                    doc.text(`Exportado: ${new Date().toLocaleDateString()} - Representante Empresa`, 14, 21);
+                    doc.text(`Exportado: ${new Date().toLocaleDateString()} - Documento Oficial de Control`, 14, 21);
 
                     const body = logs.sort((a, b) => (a.fecha || '').localeCompare(b.fecha || '')).map(row => {
                         return sheet.keys.map(key => {
@@ -2289,7 +2299,7 @@ const App = {
                 });
             });
 
-            doc.save(`REGISTROS_AQUADEZA_${new Date().toISOString().split('T')[0]}.pdf`);
+            doc.save(`REGISTROS_AQUADEZA_${this.currentYear}_${String(this.currentMonth + 1).padStart(2, '0')}.pdf`);
         } catch (error) {
             console.error("PDF Export Error:", error);
             alert("Error al exportar a PDF.");
@@ -2298,5 +2308,5 @@ const App = {
 };
 
 
-console.log('App version: 3.1 - Botos UI Refined');
+console.log('App version: 3.2 - Backup Access Updated');
 App.init();

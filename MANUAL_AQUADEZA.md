@@ -27,12 +27,11 @@ Si se han realizado cambios en el código y quieres que aparezcan en la URL ofic
 
 ---
 
-## 📑 3. Exportación de PDF (Solo Representantes)
+## 📑 3. Exportación de PDF
 Para descargar los registros mensuales en PDF:
 
 1.  Desde el Dashboard, pulse el botón **"Exportar PDF"**.
-2.  Introduzca el código de seguridad: **`2024`**.
-3.  El sistema generará un documento con todas las estaciones y sus respectivas hojas alineadas.
+2.  El sistema generará un documento con todas las estaciones y sus respectivas hojas alineadas.
 
 ---
 
@@ -47,4 +46,4 @@ A veces los navegadores guardan una versión vieja de la app (caché). Si no ves
 ## ⚠️ 5. Consejos para no fallar en la Presentación
 *   **Internet:** Asegúrate de tener conexión al abrir la app la primera vez para que cargue los últimos cambios.
 *   **Datos:** Los datos se guardan en el dispositivo actual (Local Storage). Para pasarlos a la nube oficial, usa siempre los botones de **Exportar Excel/PDF** como copia de seguridad mensual.
-*   **Versión:** Al final del menú principal verás "App version: 3.1". Esto confirma que tienes la última mejora aplicada.
+*   **Versión:** Al final del menú principal verás "App version: 3.2". Esto confirma que tienes la última mejora aplicada.
