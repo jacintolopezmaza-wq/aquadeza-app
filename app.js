@@ -333,7 +333,9 @@ const App = {
                     </div>
                     <div class="control-pill">
                         <label>AÑO</label>
+                        <select id="year-select">
                             ${this.generateYearOptions(this.currentYear)}
+                        </select>
                     </div>
                 </div>
             </div>
@@ -1284,7 +1286,9 @@ const App = {
                     </div>
                     <div class="control-pill">
                         <label>AÑO</label>
+                        <select id="year-select">
                             ${this.generateYearOptions(this.currentYear)}
+                        </select>
                     </div>
                 </div>
             </div>
@@ -1717,7 +1721,9 @@ const App = {
                     </div>
                     <div class="control-pill">
                         <label>AÑO</label>
+                        <select id="year-select">
                             ${this.generateYearOptions(this.currentYear)}
+                        </select>
                     </div>
                 </div>
             </div>
@@ -2054,7 +2060,9 @@ const App = {
                     </div>
                     <div class="control-pill">
                         <label>AÑO</label>
+                        <select id="year-select">
                             ${this.generateYearOptions(this.currentYear)}
+                        </select>
                     </div>
                 </div>
             </div>
@@ -2303,5 +2311,5 @@ const App = {
 };
 
 
-console.log('App version: 3.5 - Login and Years Updated');
+console.log('App version: 3.6 - Year Selector Fixed');
 App.init();

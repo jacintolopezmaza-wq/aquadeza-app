@@ -46,4 +46,4 @@ A veces los navegadores guardan una versión vieja de la app (caché). Si no ves
 ## ⚠️ 5. Consejos para no fallar en la Presentación
 *   **Internet:** Asegúrate de tener conexión al abrir la app la primera vez para que cargue los últimos cambios.
 *   **Datos:** Los datos se guardan en el dispositivo actual (Local Storage). Para pasarlos a la nube oficial, usa siempre los botones de **Exportar Excel/PDF** como copia de seguridad mensual.
-*   **Versión:** Al final del menú principal verás "App version: 3.5". Esto confirma que tienes la última mejora aplicada.
+*   **Versión:** Al final del menú principal verás "App version: 3.6". Esto confirma que tienes la última mejora aplicada.
