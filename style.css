@@ -1,17 +1,19 @@
 :root {
-    --primary: #003087;
-    /* Navy blue like image */
-    --primary-dark: #00205b;
-    --bg: #ffffff;
-    /* White background */
-    --card-bg: #f8f9fa;
-    --text: #000000;
-    /* Black text */
-    --text-muted: #495057;
-    --border: #000000;
-    /* Black lines */
-    --radius: 8px;
-    --gradient: linear-gradient(135deg, #003087 0%, #0056b3 100%);
+    --primary: #003566;
+    /* Deep Oceanic Navy */
+    --primary-light: #00a8e8;
+    /* High-Visibility Cyan */
+    --accent: #ffc300;
+    /* Eye-catching Gold/Amber for presentation */
+    --bg-app: #f8f9fa;
+    --card-bg: #ffffff;
+    --text-main: #001d3d;
+    --text-muted: #4a5568;
+    --border-color: #000000;
+    --radius-lg: 20px;
+    --radius-sm: 10px;
+    --header-gradient: linear-gradient(135deg, #001d3d 0%, #003566 100%);
+    --shadow-premium: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 * {
@@ -21,31 +23,25 @@
 }
 
 body {
-    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: var(--bg);
-    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-app);
+    color: var(--text-main);
     line-height: 1.6;
     overflow-x: hidden;
-}
-
-#app {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
 }
 
 .view {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 2rem;
-    animation: fadeIn 0.3s ease-out;
+    padding: 1.5rem;
+    animation: slideIn 0.4s ease-out;
 }
 
-@keyframes fadeIn {
+@keyframes slideIn {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(20px);
     }
 
     to {
@@ -54,89 +50,135 @@ body {
     }
 }
 
-/* Auth View */
+/* Premium Login View */
 #login-view {
     justify-content: center;
     align-items: center;
-    background: #ffffff;
+    background: radial-gradient(circle at 0% 0%, #001d3d 0%, #003566 100%);
+    min-height: 100vh;
 }
 
 .login-card {
-    background: var(--card-bg);
-    padding: 3rem;
-    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 4rem 3rem;
+    border-radius: var(--radius-lg);
     width: 100%;
-    max-width: 400px;
-    border: 1px solid #ced4da;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    max-width: 450px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: var(--shadow-premium);
+    backdrop-filter: blur(10px);
     text-align: center;
 }
 
 .login-card h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--primary);
     margin-bottom: 0.5rem;
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.login-card p {
-    color: var(--text-muted);
-    margin-bottom: 2rem;
 }
 
 .company-logo {
     font-size: 3.5rem;
-    font-weight: 800;
-    margin-bottom: 0.5rem;
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+    letter-spacing: -2px;
+    color: var(--primary);
+    margin-bottom: 1rem;
 }
 
-.employee-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 1rem;
-    margin-top: 2rem;
-}
-
-.employee-btn {
-    background: #ffffff;
-    border: 1px solid #ced4da;
-    padding: 1.5rem 1rem;
-    border-radius: 1rem;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    color: #333;
-}
-
-.employee-btn:hover {
-    transform: translateY(-5px);
-    border-color: var(--primary);
-    background: var(--primary);
-}
-
-#welcome-user {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    display: block;
+/* Premium Dashboard Header */
+#dashboard-view header {
+    background: var(--header-gradient);
+    margin: -1.5rem -1.5rem 3rem -1.5rem;
+    padding: 3rem 2rem;
+    color: white;
+    border-bottom: 6px solid var(--accent);
+    box-shadow: var(--shadow-premium);
+    text-align: center;
 }
 
 .header-left h1 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: 2px;
     margin: 0;
-    font-size: 1.5rem;
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+}
+
+#welcome-user {
+    font-size: 1rem;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+/* Station Cards Upgrade */
+.station-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Professional Station Cards */
+.station-card {
+    background: var(--card-bg);
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-lg);
+    padding: 3.5rem 2.5rem;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.station-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-light);
+}
+
+.station-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.station-card:hover::after {
+    transform: scaleX(1);
+}
+
+.station-card .icon {
+    font-size: 4rem;
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
+}
+
+/* Employee Selection Upgrade */
+.employee-btn {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    padding: 2rem 1.5rem;
+    border-radius: var(--radius-lg);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.employee-btn:hover {
+    background: var(--primary);
+    color: white;
+    transform: scale(1.05);
 }
 
 /* Backup Section */
@@ -316,19 +358,24 @@ header {
 /* Buttons */
 .btn-primary {
     width: 100%;
-    padding: 14px;
-    background: var(--gradient);
+    padding: 18px;
+    background: linear-gradient(135deg, #ffc300 0%, #ff9500 100%);
     border: none;
-    border-radius: var(--radius);
-    color: white;
-    font-weight: 600;
-    font-size: 1rem;
+    border-radius: var(--radius-lg);
+    color: #001d3d;
+    font-weight: 800;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     cursor: pointer;
-    transition: opacity 0.2s;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 20px rgba(255, 195, 0, 0.3);
+    margin-top: 2rem;
 }
 
 .btn-primary:hover {
-    opacity: 0.9;
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(255, 195, 0, 0.4);
 }
 
 .btn-secondary {
@@ -460,86 +507,69 @@ header {
 
 }
 
-/* Sheet Style for Botos */
-/* Sheet Style for Botos - Exact Replica of Image */
+/* Sheet Style for Botos - High visibility for presentation */
 .sheet-form {
-    max-width: 1450px !important;
-    width: 100% !important;
-    margin: 0 auto !important;
-    padding: 0.5rem !important;
+    max-width: 1600px !important;
+    margin: 1rem auto !important;
+    padding: 1.5rem !important;
     background: #fff !important;
-    color: #1a1a1a !important;
-    border: 3px solid #000 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    box-sizing: border-box;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-md) !important;
+    border: 1px solid var(--border-color) !important;
 }
 
-/* New Professional Header Design */
+/* Premium Header inside Forms */
 .premium-header {
-    background: linear-gradient(135deg, #003087 0%, #0056b3 100%);
+    background: var(--header-gradient);
     color: white;
-    padding: 1rem 2rem;
-    border-bottom: 4px solid #000;
+    padding: 2.5rem;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    margin: -1.5rem -1.5rem 1.5rem -1.5rem;
     text-align: center;
     position: relative;
+    box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .header-logo-top {
-    position: absolute;
-    top: 10px;
-    left: 20px;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     font-weight: 900;
-    letter-spacing: 2px;
-}
-
-.header-logo-top {
-    font-size: 0.8rem;
-    font-weight: 800;
-    opacity: 0.8;
-    margin-bottom: 0.5rem;
-}
-
-.header-main-titles {
-    text-align: center;
+    letter-spacing: 5px;
     margin-bottom: 1rem;
-    width: 100%;
-}
-
-.brand-tagline {
-    font-size: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    font-weight: 300;
-    margin-bottom: 0px;
+    color: var(--primary-light);
 }
 
 .station-title {
-    font-size: 2.2rem;
-    font-weight: 800;
-    margin: 0;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    font-size: 2.8rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.brand-tagline {
+    font-size: 1.2rem;
+    letter-spacing: 8px;
+    font-weight: 300;
+    opacity: 0.8;
 }
 
 .sheet-info-badge {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.2);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-top: 5px;
-    backdrop-filter: blur(5px);
+    background: var(--accent);
+    color: #000;
+    padding: 6px 20px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .header-controls-row {
-    margin-top: 1.5rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    display: flex;
-    gap: 20px;
-    align-items: center;
+    margin-top: 2rem;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-radius: 50px;
+    border: none;
 }
 
 .control-pill {
@@ -592,21 +622,15 @@ header {
     padding: 2px;
 }
 
+/* Base Table Styles - Preserving the visibility request */
 .sheet-table {
     display: grid;
-    border: 1px solid #000;
-    background: #fff;
-    overflow-x: auto;
-}
-
-/* Base Table Styles */
-.sheet-table {
-    display: grid;
-    border-top: 1px solid #000;
-    border-left: 1px solid #000;
+    border-top: 1.5px solid #000;
+    border-left: 1.5px solid #000;
     overflow-x: auto;
     background-color: #fff;
-    margin-top: 5px;
+    margin-top: 10px;
+    box-shadow: var(--shadow-sm);
 }
 
 /* EDAR BOTOS: 16 columns matching the paper form proportions */
