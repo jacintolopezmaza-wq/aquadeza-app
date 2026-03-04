@@ -5,7 +5,7 @@ Este manual está diseñado para el personal operativo y representantes de la em
 ## 🔗 1. Acceso a la Aplicación
 La aplicación es una PWA (Aplicación Web Progresiva). Se puede acceder desde cualquier dispositivo con internet en la siguiente URL:
 
-**URL Oficial:** [https://jacintolopezmaza-wq.github.io/control-diario-aquadeza/](https://jacintolopezmaza-wq.github.io/control-diario-aquadeza/)
+**URL Oficial:** https://jacintolopezmaza-wq.github.io/aquadeza-app/
 
 > **Nota:** Para una mejor experiencia en móviles, abra la URL en Safari (iPhone) o Chrome (Android) y seleccione **"Añadir a la pantalla de inicio"**.
 
