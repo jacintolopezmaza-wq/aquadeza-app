@@ -1,3 +1,21 @@
+/**
+ * =============================================================
+ *  AQUADEZA — Control Diario de Instalaciones
+ * =============================================================
+ *  © 2024–2025 AQUADEZA. Todos los derechos reservados.
+ *
+ *  Autor: Richard Jacinto Lopez Maza
+ *  Desarrollado para uso interno de AQUADEZA.
+ *
+ *  Este software es de uso interno exclusivo de AQUADEZA.
+ *  Queda prohibida su reproducción, distribución o modificación
+ *  total o parcial sin autorización expresa por escrito.
+ *
+ *  Aplicación desarrollada para la gestión de ETAP y EDAR.
+ *  Versión: 3.6
+ * =============================================================
+ */
+
 // App State Manager
 const App = {
     currentUser: null,
@@ -2312,4 +2330,5 @@ const App = {
 
 
 console.log('App version: 3.6 - Year Selector Fixed');
+console.log('© 2024–2025 AQUADEZA. Software de uso interno. Todos los derechos reservados.');
 App.init();

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidad - AQUADEZA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #003566;
+            --primary-light: #00a8e8;
+            --accent: #ffc300;
+            --bg-app: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #001d3d;
+            --text-muted: #4a5568;
+            --radius-lg: 20px;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-app);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: var(--radius-lg);
+            max-width: 800px;
+            width: 90%;
+            margin: 2rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 53, 102, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .company-logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+            margin-top: 2rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        ul {
+            padding-left: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            .company-logo {
+                font-size: 2rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="company-logo">AQUADEZA</div>
+            <h1>Política de Privacidad</h1>
+        </div>
+
+        <section>
+            <p>Esta Política de Privacidad describe cómo la aplicación <strong>Control Diario AQUADEZA</strong>
+                recopila, utiliza y protege la información proporcionada por los usuarios.</p>
+
+            <h2>1. Responsable del Tratamiento</h2>
+            <p>La aplicación es una herramienta de uso profesional para el control de estaciones de tratamiento de agua
+                operadas por Aquadeza.</p>
+
+            <h2>2. Información Recopilada</h2>
+            <p>La aplicación recopila los siguientes tipos de datos:</p>
+            <ul>
+                <li><strong>Identificación:</strong> Nombre del operario/usuario que accede al sistema.</li>
+                <li><strong>Datos de Operación:</strong> Lecturas de consumos, parámetros físicos, químicos y horas de
+                    funcionamiento de las estaciones (ETAP, CATASOS, VILATUXE, BOTOS, CORREDOIRA).</li>
+            </ul>
+
+            <h2>3. Almacenamiento de Datos</h2>
+            <p>Para garantizar el funcionamiento sin conexión y la agilidad de la herramienta, los datos se almacenan
+                <strong>localmente en el dispositivo</strong> utilizando la tecnología <em>LocalStorage</em> del
+                navegador. Los datos no se envían automáticamente a servidores externos.</p>
+
+            <h2>4. Finalidad</h2>
+            <p>Los datos se utilizan exclusivamente para:</p>
+            <ul>
+                <li>Llevar un control histórico de las operaciones diarias.</li>
+                <li>Permitir la exportación manual de informes en formato Excel (.xlsx) y PDF por parte del usuario.
+                </li>
+            </ul>
+
+            <h2>5. Sus Derechos</h2>
+            <p>Usted tiene control total sobre sus datos. Puede eliminar toda la información almacenada simplemente
+                borrando los datos de navegación de su explorador o cerrando sesión en la aplicación si esta incluye
+                dicha limpieza automática.</p>
+
+            <h2>6. Seguridad</h2>
+            <p>Se recomienda el uso de dispositivos con acceso restringido para proteger la integridad de los datos de
+                control almacenados localmente.</p>
+        </section>
+
+        <div class="footer">
+            <p>&copy; 2024 AQUADEZA - Control Diario v3.6</p>
+            <a href="index.html" class="btn-back">Volver a la App</a>
+        </div>
+    </div>
+</body>
+
+</html>

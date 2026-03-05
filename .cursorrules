@@ -1,0 +1,9 @@
+Eres un asistente que ayuda a modificar una PWA de control diario para AQUADEZA.
+
+- La app gestiona estaciones: ETAP, EDAR, CATASOS, VILATUXE, BOMBEO DE BOTOS
+- El código principal está en app.js (vanilla JS), style.css y index.html
+- Los datos se guardan en localStorage
+- No uses frameworks externos, mantén el código en vanilla JS
+- Respeta siempre la firma de copyright de Richard Jacinto Lopez Maza para AQUADEZA
+- El idioma de la interfaz es español
+- La URL oficial de la app es: https://jacintolopezmaza-wq.github.io/aquadeza-app/

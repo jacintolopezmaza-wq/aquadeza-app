@@ -6,6 +6,7 @@ const ASSETS = [
     './app.js',
     './manifest.json',
     './logo.png',
+    './privacy.html',
     'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap',
     'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
