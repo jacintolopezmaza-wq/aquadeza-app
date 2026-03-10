@@ -2232,9 +2232,14 @@ const App = {
         try {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF('l', 'mm', 'a4');
+            const MESES = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
+            const mesNombre = MESES[this.currentMonth];
             let firstPage = true;
 
-            Object.keys(allData).forEach(station => {
+            const STATION_ORDER = ['ETAP', 'CATASOS', 'VILATUXE', 'BOMBEO_BOTOS', 'EDAR_CORREDOIRA', 'EDAR_BOTOS'];
+            const stationsWithData = STATION_ORDER.filter(s => allData[s] && allData[s].length > 0);
+
+            stationsWithData.forEach(station => {
                 const logs = allData[station];
                 const sheetDefs = this.getSheetDefinitions(station);
 
@@ -2242,13 +2247,30 @@ const App = {
                     if (!firstPage) doc.addPage();
                     firstPage = false;
 
-                    doc.setFontSize(14);
-                    doc.setTextColor(0, 56, 101);
-                    doc.text(`${station.replace(/_/g, ' ')} - ${sheet.name} (${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')})`, 14, 15);
+                    // Cabecera visual azul
+                    doc.setFillColor(0, 56, 101);
+                    doc.rect(0, 0, 297, 22, 'F');
+
+                    doc.setTextColor(255, 255, 255);
+                    doc.setFontSize(16);
+                    doc.setFont(undefined, 'bold');
+                    doc.text('AQUADEZA', 14, 9);
 
                     doc.setFontSize(8);
-                    doc.setTextColor(100);
-                    doc.text(`Exportado: ${new Date().toLocaleDateString()} - Registro Diario`, 14, 21);
+                    doc.setFont(undefined, 'normal');
+                    doc.text('SERVICIO DE LALÍN', 14, 15);
+
+                    doc.setFontSize(9);
+                    doc.text(`MES: ${mesNombre} ${this.currentYear}`, 283, 12, { align: 'right' });
+
+                    // Título de sección
+                    doc.setTextColor(0, 56, 101);
+                    doc.setFontSize(11);
+                    doc.setFont(undefined, 'bold');
+                    doc.text(`ESTACIÓN: ${station.replace(/_/g, ' ')} — ${sheet.name}`, 14, 29);
+
+                    doc.setFont(undefined, 'normal');
+                    doc.setTextColor(0, 0, 0);
 
                     const body = logs.sort((a, b) => (a.fecha || '').localeCompare(b.fecha || '')).map(row => {
                         return sheet.keys.map(key => {
@@ -2265,10 +2287,10 @@ const App = {
                     doc.autoTable({
                         head: [sheet.headers],
                         body: body,
-                        startY: 25,
+                        startY: 32,
                         theme: 'grid',
-                        styles: { fontSize: 4.5, cellPadding: 0.5, halign: 'center' },
-                        headStyles: { fillColor: [0, 56, 101], textColor: 255, fontSize: 4.5, fontStyle: 'bold' },
+                        styles: { fontSize: 7, cellPadding: 1.2, halign: 'center' },
+                        headStyles: { fillColor: [0, 56, 101], textColor: 255, fontSize: 7.5, fontStyle: 'bold' },
                         alternateRowStyles: { fillColor: [248, 249, 250] },
                         margin: { left: 8, right: 8 }
                     });
