@@ -447,7 +447,7 @@ const App = {
 
         let html = `<div class="sheet-table bombeo-botos-hoja2">
             <div class="sheet-cell sheet-header-cell span-row-2">DIA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2" style="display:none;">HORA</div>
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>
             <div class="sheet-cell sheet-header-cell span-col-7">ENERGÍA REACTIVA</div>
             <div class="sheet-cell sheet-header-cell span-col-7">MAXÍMETRO</div>
 
@@ -476,7 +476,7 @@ const App = {
 
             html += `
                 <div class="sheet-cell ${isInitial ? 'initial-row-cell' : ''} ${isInvalidDay ? 'disabled-day' : ''}" style="grid-column:1">${d}</div>
-                <div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
+                <div class="sheet-cell"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="p1581" value="${log.p1581 || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="p1582" value="${log.p1582 || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="p1583" value="${log.p1583 || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
@@ -650,7 +650,7 @@ const App = {
 
             html += `
                 <div class="sheet-cell ${isInitial ? 'initial-row-cell' : ''} ${isInvalidDay ? 'disabled-day' : ''}" style="grid-column:1">${d}</div>
-                <div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
+                <div class="sheet-cell"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="p1581" value="${log.p1581 || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="p1582" value="${log.p1582 || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="p1583" value="${log.p1583 || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
