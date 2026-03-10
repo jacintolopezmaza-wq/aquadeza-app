@@ -87,6 +87,17 @@ const App = {
             }
         });
 
+        document.getElementById('login-name').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const nameInput = document.getElementById('login-name');
+                if (nameInput.value.trim()) {
+                    this.handleLogin(nameInput.value.trim());
+                } else {
+                    alert("Por favor, ingrese su nombre.");
+                }
+            }
+        });
+
         document.querySelectorAll('.station-card').forEach(card => {
             card.addEventListener('click', () => this.showStationForm(card.getAttribute('data-station')));
         });
@@ -196,11 +207,11 @@ const App = {
             fieldContainer.innerHTML = `
                 <div class="input-group">
                     <label>Fecha</label>
-                    <input type="date" id="form-date" value="${new Date().toISOString().split('T')[0]}">
+                    <input type="date" id="form-date" value="${new Date().toISOString().split('T')[0]}" readonly style="pointer-events:none; opacity:0.7; cursor:default;">
                 </div>
                 <div class="input-group">
                     <label>Hora</label>
-                    <input type="time" id="form-time" value="${new Date().toTimeString().substring(0, 5)}">
+                    <input type="time" id="form-time" value="${new Date().toTimeString().substring(0, 5)}" readonly style="pointer-events:none; opacity:0.7; cursor:default;">
                 </div>
                 <div class="input-group">
                     <label>Observaciones Generales</label>
@@ -251,7 +262,7 @@ const App = {
     },
 
     renderEdarBotosSheet(container) {
-        if (!this.currentMonth) {
+        if (this.currentMonth == null) {
             const now = new Date();
             this.currentMonth = now.getMonth();
             this.currentYear = now.getFullYear();
@@ -323,7 +334,7 @@ const App = {
     },
 
     renderBombeoBotosSheet(container) {
-        if (!this.currentMonth) {
+        if (this.currentMonth == null) {
             const now = new Date();
             this.currentMonth = now.getMonth();
             this.currentYear = now.getFullYear();
@@ -496,7 +507,7 @@ const App = {
 
 
     renderCatasosSheet(container) {
-        if (!this.currentMonth) {
+        if (this.currentMonth == null) {
             const now = new Date();
             this.currentMonth = now.getMonth();
             this.currentYear = now.getFullYear();
@@ -1278,7 +1289,7 @@ const App = {
     },
 
     renderEdarCorredoiraSheet(container) {
-        if (!this.currentMonth) {
+        if (this.currentMonth == null) {
             const now = new Date();
             this.currentMonth = now.getMonth();
             this.currentYear = now.getFullYear();
@@ -1709,7 +1720,7 @@ const App = {
 
 
     renderEtapSheet(container) {
-        if (!this.currentMonth) {
+        if (this.currentMonth == null) {
             const now = new Date();
             this.currentMonth = now.getMonth();
             this.currentYear = now.getFullYear();
@@ -2050,7 +2061,7 @@ const App = {
     },
 
     renderVilatuxeSheet(container) {
-        if (!this.currentMonth) {
+        if (this.currentMonth == null) {
             const now = new Date();
             this.currentMonth = now.getMonth();
             this.currentYear = now.getFullYear();
@@ -2186,7 +2197,13 @@ const App = {
     async exportAllData(format) {
         const stations = ['ETAP', 'CATASOS', 'VILATUXE', 'BOMBEO_BOTOS', 'EDAR_BOTOS', 'EDAR_CORREDOIRA'];
         const allData = {};
-        const monthKey = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}`;
+        const now = new Date();
+        const exportYear = this.currentYear != null ? this.currentYear : now.getFullYear();
+        const exportMonth = this.currentMonth != null ? this.currentMonth : now.getMonth();
+        const monthKey = `${exportYear}-${String(exportMonth + 1).padStart(2, '0')}`;
+        // Temporarily set for generateExcel/PDF title
+        const prevYear = this.currentYear; const prevMonth = this.currentMonth;
+        this.currentYear = exportYear; this.currentMonth = exportMonth;
 
         stations.forEach(s => {
             const logs = JSON.parse(localStorage.getItem(`logs_${s}`) || '[]');
@@ -2199,6 +2216,7 @@ const App = {
         } else {
             this.generatePDF(allData);
         }
+        this.currentYear = prevYear; this.currentMonth = prevMonth;
     },
 
     getSheetDefinitions(station) {
@@ -2329,6 +2347,5 @@ const App = {
 };
 
 
-console.log('App version: 3.6 - Year Selector Fixed');
-console.log('© 2024–2025 AQUADEZA. Software de uso interno. Todos los derechos reservados.');
+console.log('App version: 3.7 - Year Selector Fixed');
 App.init();

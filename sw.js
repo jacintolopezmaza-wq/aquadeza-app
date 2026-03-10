@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aquadeza-v3.6';
+const CACHE_NAME = 'aquadeza-v3.7';
 const ASSETS = [
     './',
     './index.html',
