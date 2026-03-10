@@ -105,7 +105,6 @@ const App = {
         });
     },
 
-
     checkAuth() {
         const savedUser = localStorage.getItem('control_user');
         if (savedUser) {
@@ -153,8 +152,7 @@ const App = {
     registerServiceWorker() {
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js')
-                .then(reg => console.log('Service Worker registrado'))
-                .catch(err => console.log('Error registrando SW', err));
+                .catch(err => console.error('Error registrando SW', err));
         }
     },
 
@@ -312,8 +310,6 @@ const App = {
         this.recalculateDailyConsumption();
         this.recalculateTotals();
     },
-
-
 
     setupBotosTabListeners() {
         document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -495,7 +491,6 @@ const App = {
         }
         return html + `</div>`;
     },
-
 
     renderCatasosSheet(container) {
         if (this.currentMonth === undefined || this.currentMonth === null) {
@@ -1237,7 +1232,6 @@ const App = {
             this.currentYear = now.getFullYear();
         }
 
-
         const months = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
 
         let html = `
@@ -1660,7 +1654,6 @@ const App = {
         }
     },
 
-
     renderEtapSheet(container) {
         if (this.currentMonth === undefined || this.currentMonth === null) {
             const now = new Date();
@@ -1945,7 +1938,6 @@ const App = {
             });
         });
     },
-
 
     handleFormSubmit() {
         if (['EDAR_BOTOS', 'EDAR_CORREDOIRA', 'ETAP', 'BOMBEO_BOTOS', 'CATASOS', 'VILATUXE'].includes(this.currentStation)) {
@@ -2305,6 +2297,4 @@ const App = {
     }
 };
 
-
-console.log('App version: 3.6 - Year Selector Fixed');
 App.init();

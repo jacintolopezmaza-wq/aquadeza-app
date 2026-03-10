@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aquadeza-v3.8';
+const CACHE_NAME = 'aquadeza-v3.9';
 const ASSETS = [
     './',
     './index.html',
@@ -18,7 +18,6 @@ self.addEventListener('install', event => {
     self.skipWaiting();
     event.waitUntil(
         caches.open(CACHE_NAME).then(cache => {
-            console.log('Cacheando archivos...');
             return cache.addAll(ASSETS);
         })
     );
