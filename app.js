@@ -177,8 +177,12 @@ const App = {
             formElement.classList.remove('sheet-form');
             fieldContainer.innerHTML = `
                 <div class="input-group">
-                    <label>📅 Fecha (automática)</label>
-                    <input type="date" id="form-date" value="${new Date().toISOString().split('T')[0]}" readonly style="pointer-events:none; opacity:0.75; cursor:not-allowed; background:#1a1a2e; border: 1px solid #444;">
+                    <label>Fecha</label>
+                    <input type="date" id="form-date" value="${new Date().toISOString().split('T')[0]}">
+                </div>
+                <div class="input-group">
+                    <label>Hora</label>
+                    <input type="time" id="form-time" value="${new Date().toTimeString().substring(0, 5)}">
                 </div>
                 <div class="input-group">
                     <label>Observaciones Generales</label>
@@ -373,7 +377,7 @@ const App = {
             <div class="sheet-cell sheet-header-cell span-row-2">DIA</div>
             <div class="sheet-cell sheet-header-cell span-row-2" style="display:none;">HORA</div>
             <div class="sheet-cell sheet-header-cell span-col-6">HORAS BOMBEO</div>
-            <div class="sheet-cell sheet-header-cell span-col-7">ENERGIA ACTIVA</div>
+            <div class="sheet-cell sheet-header-cell span-col-7">ENERGÍA ACTIVA</div>
 
             <div class="sheet-cell sheet-header-cell">BOMBA 1</div>
             <div class="sheet-cell sheet-header-cell">DIF</div>
@@ -424,8 +428,8 @@ const App = {
         let html = `<div class="sheet-table bombeo-botos-hoja2">
             <div class="sheet-cell sheet-header-cell span-row-2">DIA</div>
             <div class="sheet-cell sheet-header-cell span-row-2" style="display:none;">HORA</div>
-            <div class="sheet-cell sheet-header-cell span-col-7">ENERGIA REACTIVA</div>
-            <div class="sheet-cell sheet-header-cell span-col-7">MAXIMETRO</div>
+            <div class="sheet-cell sheet-header-cell span-col-7">ENERGÍA REACTIVA</div>
+            <div class="sheet-cell sheet-header-cell span-col-7">MAXÍMETRO</div>
 
             <div class="sheet-cell sheet-header-cell">P 1.58.1</div>
             <div class="sheet-cell sheet-header-cell">P 1.58.2</div>
@@ -544,9 +548,9 @@ const App = {
 
         let html = `<div class="sheet-table bombeo-catasos-hoja1">
             <div class="sheet-cell sheet-header-cell span-row-2">DIA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2" style="display:none;">HORA</div>
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>
             <div class="sheet-cell sheet-header-cell span-col-6">HORAS BOMBEO</div>
-            <div class="sheet-cell sheet-header-cell span-col-7">ENERGIA ACTIVA</div>
+            <div class="sheet-cell sheet-header-cell span-col-7">ENERGÍA ACTIVA</div>
 
             <div class="sheet-cell sheet-header-cell">BOMBA 1</div>
             <div class="sheet-cell sheet-header-cell">DIF</div>
@@ -597,9 +601,9 @@ const App = {
 
         let html = `<div class="sheet-table bombeo-catasos-hoja2">
             <div class="sheet-cell sheet-header-cell span-row-2">DIA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2" style="display:none;">HORA</div>
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>
             <div class="sheet-cell sheet-header-cell span-col-7">ENERGIA REACTIVA</div>
-            <div class="sheet-cell sheet-header-cell span-col-7">MAXIMETRO</div>
+            <div class="sheet-cell sheet-header-cell span-col-7">MAXÍMETRO</div>
 
             <div class="sheet-cell sheet-header-cell">P 1.58.1</div>
             <div class="sheet-cell sheet-header-cell">P 1.58.2</div>
@@ -692,7 +696,7 @@ const App = {
 
         html += `
             <div class="sheet-cell initial-row-cell">-</div>
-            <div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>
+            <div class="sheet-cell"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>
             <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${monthKey}-00" data-field="taire" value="${initialLog.taire || ''}" ></div>
             <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${monthKey}-00" data-field="tagua" value="${initialLog.tagua || ''}" ></div>
             <div class="sheet-cell"><input type="text" inputmode="text" class="row-input" data-date="${monthKey}-00" data-field="precipitacion" value="${initialLog.precipitacion || ''}" ></div>
@@ -717,7 +721,7 @@ const App = {
 
             html += `
                 <div class="sheet-cell date-cell ${isInvalidDay ? 'disabled-row' : ''}">${d}</div>
-                <div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
+                <div class="sheet-cell"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${dateStr}" data-field="taire" value="${log.taire || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${dateStr}" data-field="tagua" value="${log.tagua || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="text" inputmode="text" class="row-input" data-date="${dateStr}" data-field="precipitacion" value="${log.precipitacion || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
@@ -764,7 +768,7 @@ const App = {
         let html = `<div class="sheet-table botos-horas">
             <div class="sheet-cell sheet-header-cell span-row-2"></div>
             <div class="sheet-cell sheet-header-cell span-row-2">FECHA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2" style="display:none;">HORA</div>
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>
             <div class="sheet-cell sheet-header-cell span-row-2"></div>`; // Separador vertical
         equipment.forEach(e => { html += `<div class="sheet-cell sheet-header-cell span-col-2">${e.label}</div> `; });
         html += equipment.map(() => `<div class="sheet-cell sheet-header-cell">LECTURA</div><div class="sheet-cell sheet-header-cell">H.</div>`).join('');
@@ -780,7 +784,7 @@ const App = {
         html += `<div class="sheet-cell">
             <input type="text" class="row-input" data-date="${monthKey}-00" data-field="h2_fecha_manual" value="${initialLog.h2_fecha_manual || ''}" placeholder="INICIAL" >
         </div> `;
-        html += `<div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>`;
+        html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>`;
         html += `<div class="sheet-cell"></div>`; // Separador vertical
         equipment.forEach(e => {
             html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${monthKey}-00" data-field="h2_${e.id}_l" value="${initialLog['h2_' + e.id + '_l'] || ''}" ></div>`;
@@ -797,7 +801,7 @@ const App = {
             html += `<div class="sheet-cell date-cell ${isInvalidDay ? 'disabled-row' : ''}">
                 <input type="text" class="row-input" data-date="${dateStr}" data-field="h2_fecha_manual" value="${log.h2_fecha_manual || ''}" placeholder="" ${isInvalidDay ? 'disabled' : ''}>
             </div> `;
-            html += `<div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
+            html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
             html += `<div class="sheet-cell"></div>`; // Separador vertical
             equipment.forEach(e => {
                 html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="h2_${e.id}_l" value="${log['h2_' + e.id + '_l'] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
@@ -829,7 +833,7 @@ const App = {
         let html = `<div class="sheet-table botos-horas">
             <div class="sheet-cell sheet-header-cell span-row-2"></div>
             <div class="sheet-cell sheet-header-cell span-row-2">FECHA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2" style="display:none;">HORA</div>
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>
             <div class="sheet-cell sheet-header-cell span-row-2"></div>`; // Separador vertical
         equipment.forEach(e => { html += `<div class="sheet-cell sheet-header-cell span-col-2">${e.label}</div> `; });
         html += equipment.map(() => `<div class="sheet-cell sheet-header-cell">LECTURA</div><div class="sheet-cell sheet-header-cell">H.</div>`).join('');
@@ -845,7 +849,7 @@ const App = {
         html += `<div class="sheet-cell date-cell">
             <input type="text" class="row-input" data-date="${monthKey}-00" data-field="h3_fecha_manual" value="${initialLog.h3_fecha_manual || ''}" placeholder="INICIAL" >
         </div> `;
-        html += `<div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>`;
+        html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>`;
         html += `<div class="sheet-cell"></div>`; // Separador vertical
         equipment.forEach(e => {
             html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${monthKey}-00" data-field="h3_${e.id}_l" value="${initialLog['h3_' + e.id + '_l'] || ''}" ></div>`;
@@ -862,7 +866,7 @@ const App = {
             html += `<div class="sheet-cell date-cell ${isInvalidDay ? 'disabled-row' : ''}">
                 <input type="text" class="row-input" data-date="${dateStr}" data-field="h3_fecha_manual" value="${log.h3_fecha_manual || ''}" placeholder="" ${isInvalidDay ? 'disabled' : ''}>
             </div> `;
-            html += `<div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
+            html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
             html += `<div class="sheet-cell"></div>`; // Separador vertical
             equipment.forEach(e => {
                 html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="h3_${e.id}_l" value="${log['h3_' + e.id + '_l'] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
@@ -892,7 +896,7 @@ const App = {
         let html = `<div class="sheet-table botos-horas">
             <div class="sheet-cell sheet-header-cell span-row-2"></div>
             <div class="sheet-cell sheet-header-cell span-row-2">FECHA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2" style="display:none;">HORA</div>
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>
             <div class="sheet-cell sheet-header-cell span-row-2"></div>`; // Separador vertical
         equipment.forEach(e => { html += `<div class="sheet-cell sheet-header-cell span-col-2">${e.label || '-'}</div>`; });
         html += equipment.map(() => `<div class="sheet-cell sheet-header-cell">LECTURA</div><div class="sheet-cell sheet-header-cell">H.</div>`).join('');
@@ -908,7 +912,7 @@ const App = {
         html += `<div class="sheet-cell date-cell">
             <input type="text" class="row-input" data-date="${monthKey}-00" data-field="h4_fecha_manual" value="${initialLog.h4_fecha_manual || ''}" placeholder="INICIAL" >
         </div>`;
-        html += `<div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>`;
+        html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>`;
         html += `<div class="sheet-cell"></div>`; // Separador vertical
         equipment.forEach(e => {
             html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${monthKey}-00" data-field="h4_${e.id}_l" value="${initialLog['h4_' + e.id + '_l'] || ''}" ></div>`;
@@ -925,7 +929,7 @@ const App = {
             html += `<div class="sheet-cell date-cell ${isInvalidDay ? 'disabled-row' : ''}">
                 <input type="text" class="row-input" data-date="${dateStr}" data-field="h4_fecha_manual" value="${log.h4_fecha_manual || ''}" placeholder="" ${isInvalidDay ? 'disabled' : ''}>
             </div>`;
-            html += `<div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
+            html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
             html += `<div class="sheet-cell"></div>`; // Separador vertical
             equipment.forEach(e => {
                 html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="h4_${e.id}_l" value="${log['h4_' + e.id + '_l'] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
@@ -1025,17 +1029,6 @@ const App = {
                 const field = input.getAttribute('data-field');
                 const val = input.value;
                 this.saveSingleField(date, field, val);
-
-                // Auto-save hora when any field in that row is edited (only if not already set)
-                if (field !== 'hora') {
-                    const horaInput = document.querySelector(`.row-input[data-date="${date}"][data-field="hora"]`);
-                    if (horaInput && !horaInput.getAttribute('data-hora-set')) {
-                        const autoHora = new Date().toTimeString().substring(0, 5);
-                        horaInput.value = autoHora;
-                        horaInput.setAttribute('data-hora-set', 'true');
-                        this.saveSingleField(date, 'hora', autoHora);
-                    }
-                }
 
                 if (field === 'caudal_lect') this.recalculateDailyConsumption();
 
@@ -1380,7 +1373,7 @@ const App = {
         // 1. Initial Blank Line (Row 1)
         html += `
             <div class="sheet-cell initial-row-cell"></div>
-            <div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>
+            <div class="sheet-cell"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>
             <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${monthKey}-00" data-field="taire" value="${initialLog.taire || ''}" ></div>
             <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${monthKey}-00" data-field="tagua" value="${initialLog.tagua || ''}" ></div>
             <div class="sheet-cell"><input type="text" inputmode="text" class="row-input" data-date="${monthKey}-00" data-field="precipitacion" value="${initialLog.precipitacion || ''}" ></div>
@@ -1406,7 +1399,7 @@ const App = {
 
             html += `
                 <div class="sheet-cell date-cell ${isInvalidDay ? 'disabled-day' : ''}">${d}</div>
-                <div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
+                <div class="sheet-cell"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${dateStr}" data-field="taire" value="${log.taire || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${dateStr}" data-field="tagua" value="${log.tagua || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="text" inputmode="text" class="row-input" data-date="${dateStr}" data-field="precipitacion" value="${log.precipitacion || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
@@ -1477,7 +1470,7 @@ const App = {
 
         let html = `<div class="sheet-table corredoira-horas">
             <div class="sheet-cell sheet-header-cell span-row-2">DÍA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2" style="display:none;">HORA</div>`;
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>`;
         equipment.forEach(e => { html += `<div class="sheet-cell sheet-header-cell span-col-2">${e.label}</div> `; });
         html += equipment.map(() => `<div class="sheet-cell sheet-header-cell">LECTURA</div><div class="sheet-cell sheet-header-cell">H.</div>`).join('');
 
@@ -1486,7 +1479,7 @@ const App = {
 
         // Initial Row (Day 00)
         html += `<div class="sheet-cell initial-row-cell">0</div>`;
-        html += `<div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>`;
+        html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>`;
         equipment.forEach(e => {
             html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${monthKey}-00" data-field="h1_${e.id}_l" value="${initialLog['h1_' + e.id + '_l'] || ''}" ></div>`;
             html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${monthKey}-00" data-field="h1_${e.id}_h" value="${initialLog['h1_' + e.id + '_h'] || ''}" ></div>`;
@@ -1499,7 +1492,7 @@ const App = {
             const isInvalidDay = d > daysInMonth;
 
             html += `<div class="sheet-cell date-cell ${isInvalidDay ? 'disabled-row' : ''}">${d}</div>`;
-            html += `<div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
+            html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
             equipment.forEach(e => {
                 html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="h1_${e.id}_l" value="${log['h1_' + e.id + '_l'] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
                 html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="h1_${e.id}_h" value="${log['h1_' + e.id + '_h'] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
@@ -1528,7 +1521,7 @@ const App = {
 
         let html = `<div class="sheet-table corredoira-horas hoja2">
             <div class="sheet-cell sheet-header-cell span-row-2">DÍA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2" style="display:none;">HORA</div>`;
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>`;
         equipment.forEach(e => { html += `<div class="sheet-cell sheet-header-cell span-col-2">${e.label}</div> `; });
         html += equipment.map(() => `<div class="sheet-cell sheet-header-cell">LECTURA</div><div class="sheet-cell sheet-header-cell">H.</div>`).join('');
 
@@ -1537,7 +1530,7 @@ const App = {
 
         // Initial Row (Day 00)
         html += `<div class="sheet-cell initial-row-cell">0</div>`;
-        html += `<div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>`;
+        html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>`;
         equipment.forEach(e => {
             html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${monthKey}-00" data-field="h2_${e.id}_l" value="${initialLog['h2_' + e.id + '_l'] || ''}" ></div>`;
             html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${monthKey}-00" data-field="h2_${e.id}_h" value="${initialLog['h2_' + e.id + '_h'] || ''}" ></div>`;
@@ -1550,7 +1543,7 @@ const App = {
             const isInvalidDay = d > daysInMonth;
 
             html += `<div class="sheet-cell date-cell ${isInvalidDay ? 'disabled-row' : ''}">${d}</div>`;
-            html += `<div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
+            html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
             equipment.forEach(e => {
                 html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="h2_${e.id}_l" value="${log['h2_' + e.id + '_l'] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
                 html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="h2_${e.id}_h" value="${log['h2_' + e.id + '_h'] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
@@ -1579,7 +1572,7 @@ const App = {
 
         let html = `<div class="sheet-table corredoira-horas">
             <div class="sheet-cell sheet-header-cell span-row-2">DÍA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2" style="display:none;">HORA</div>`;
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>`;
         equipment.forEach(e => { html += `<div class="sheet-cell sheet-header-cell span-col-2">${e.label}</div> `; });
         html += equipment.map(() => `<div class="sheet-cell sheet-header-cell">LECTURA</div><div class="sheet-cell sheet-header-cell">H.</div>`).join('');
 
@@ -1588,7 +1581,7 @@ const App = {
 
         // Initial Row (Day 00)
         html += `<div class="sheet-cell initial-row-cell">0</div>`;
-        html += `<div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>`;
+        html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>`;
         equipment.forEach(e => {
             html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${monthKey}-00" data-field="h3_${e.id}_l" value="${initialLog['h3_' + e.id + '_l'] || ''}" ></div>`;
             html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${monthKey}-00" data-field="h3_${e.id}_h" value="${initialLog['h3_' + e.id + '_h'] || ''}" ></div>`;
@@ -1601,7 +1594,7 @@ const App = {
             const isInvalidDay = d > daysInMonth;
 
             html += `<div class="sheet-cell date-cell ${isInvalidDay ? 'disabled-row' : ''}">${d}</div>`;
-            html += `<div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
+            html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
             equipment.forEach(e => {
                 html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="h3_${e.id}_l" value="${log['h3_' + e.id + '_l'] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
                 html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="h3_${e.id}_h" value="${log['h3_' + e.id + '_h'] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
@@ -1774,7 +1767,7 @@ const App = {
 
         let html = `<div class="sheet-table etap-hoja1">
             <div class="sheet-cell sheet-header-cell span-row-2">DIA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2" style="display:none;">HORA</div>
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>
             <div class="sheet-cell sheet-header-cell span-col-4">CAUDAL</div>
             <div class="sheet-cell sheet-header-cell span-row-2">P 1.18.1</div>
             <div class="sheet-cell sheet-header-cell span-row-2">P 1.18.2</div>
@@ -1812,9 +1805,9 @@ const App = {
 
         let html = `<div class="sheet-table etap-hoja2">
             <div class="sheet-cell sheet-header-cell span-row-2">DIA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2" style="display:none;">HORA</div>
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>
             <div class="sheet-cell sheet-header-cell span-col-7">ENERGIA REACTIVA</div>
-            <div class="sheet-cell sheet-header-cell span-col-7">MAXIMETRO</div>
+            <div class="sheet-cell sheet-header-cell span-col-7">MAXÍMETRO</div>
             <div class="sheet-cell sheet-header-cell">P.1.58.1</div>
             <div class="sheet-cell sheet-header-cell">P.1.58.2</div>
             <div class="sheet-cell sheet-header-cell">P.1.58.3</div>
@@ -1850,7 +1843,7 @@ const App = {
         const monthKey = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}`;
         let html = `<div class="sheet-table etap-hoja3">
             <div class="sheet-cell sheet-header-cell span-row-2">DIA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2" style="display:none;">HORA</div>
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>
             <div class="sheet-cell sheet-header-cell span-row-2"><div class="header-vertical">ALTURA<br>DPTO. ETAP</div></div>
             <div class="sheet-cell sheet-header-cell span-col-5">REGULACIÓN DOSIFICACIÓN REACTIVOS</div>
             <div class="sheet-cell sheet-header-cell"><div class="header-vertical">ph</div></div>
@@ -1895,7 +1888,7 @@ const App = {
         const monthKey = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}`;
         let html = `<div class="sheet-table etap-hoja4">
             <div class="sheet-cell sheet-header-cell span-row-2">DIA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2" style="display:none;">HORA</div>
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>
             <div class="sheet-cell sheet-header-cell span-col-2">CL ETAP</div>
             <div class="sheet-cell sheet-header-cell span-col-2">DPTO LAGAZOS I</div>
             <div class="sheet-cell sheet-header-cell span-col-4">DPTO LAGAZOS II</div>
@@ -1940,7 +1933,7 @@ const App = {
         const monthKey = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}`;
         let html = `<div class="sheet-table etap-hoja5">
             <div class="sheet-cell sheet-header-cell span-row-2">DIA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2" style="display:none;">HORA</div>
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>
             <div class="sheet-cell sheet-header-cell span-row-2">LAGAZOS I<br>CONTADOR</div>
             <div class="sheet-cell sheet-header-cell span-col-6">HORAS BOMBEO LAGAZOS I</div>
             <div class="sheet-cell sheet-header-cell span-col-6">FILTROS LIMPIEZA</div>
@@ -2008,8 +2001,8 @@ const App = {
             alert('Mes completo guardado correctamente');
         } else {
             const formData = {
-                fecha: new Date().toISOString().split('T')[0],
-                hora: new Date().toTimeString().substring(0, 5),
+                fecha: document.getElementById('form-date').value,
+                hora: document.getElementById('form-time').value,
                 observaciones: document.getElementById('form-obs')?.value || ''
             };
 
@@ -2107,9 +2100,9 @@ const App = {
         const monthKey = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}`;
         let html = `<div class="sheet-table bombeo-catasos-hoja1">
             <div class="sheet-cell sheet-header-cell span-row-2">DIA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2" style="display:none;">HORA</div>
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>
             <div class="sheet-cell sheet-header-cell span-col-6">HORAS BOMBEO</div>
-            <div class="sheet-cell sheet-header-cell span-col-7">ENERGIA ACTIVA</div>
+            <div class="sheet-cell sheet-header-cell span-col-7">ENERGÍA ACTIVA</div>
             <div class="sheet-cell sheet-header-cell">BOMBA 1</div><div class="sheet-cell sheet-header-cell">DIF</div>
             <div class="sheet-cell sheet-header-cell">BOMBA 2</div><div class="sheet-cell sheet-header-cell">DIF</div>
             <div class="sheet-cell sheet-header-cell">BOMBA 3</div><div class="sheet-cell sheet-header-cell">DIF</div>
@@ -2125,7 +2118,7 @@ const App = {
             const isDisabled = d > daysInMonth;
             html += `
                 <div class="sheet-cell ${d === 0 ? 'initial-row-cell' : ''}">${d}</div>
-                <div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isDisabled ? 'disabled' : ''}></div>
+                <div class="sheet-cell"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isDisabled ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="b1" value="${log.b1 || ''}"></div>
                 <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="b1_dif" value="${log.b1_dif || ''}" disabled></div>
                 <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="b2" value="${log.b2 || ''}"></div>
