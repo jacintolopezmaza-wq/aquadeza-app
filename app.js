@@ -422,7 +422,7 @@ const App = {
             const isInitial = d === 0;
 
             html += `
-                <div class="sheet-cell ${isInitial ? 'initial-row-cell' : ''} ${isInvalidDay ? 'disabled-day' : ''}">${d}</div>
+                <div class="sheet-cell ${isInitial ? 'initial-row-cell' : ''} ${isInvalidDay ? 'disabled-day' : ''}" style="grid-column:1">${d}</div>
                 <div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="b1" value="${log.b1 || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="b1_dif" value="${log.b1_dif || ''}" disabled></div>
@@ -595,7 +595,7 @@ const App = {
             const isInitial = d === 0;
 
             html += `
-                <div class="sheet-cell ${isInitial ? 'initial-row-cell' : ''} ${isInvalidDay ? 'disabled-day' : ''}">${d}</div>
+                <div class="sheet-cell ${isInitial ? 'initial-row-cell' : ''} ${isInvalidDay ? 'disabled-day' : ''}" style="grid-column:1">${d}</div>
                 <div class="sheet-cell" style="display:none;"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="b1" value="${log.b1 || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" class="row-input" data-date="${dateStr}" data-field="b1_dif" value="${log.b1_dif || ''}" disabled></div>
@@ -1069,7 +1069,7 @@ const App = {
 
         // Hora bloqueada: readonly + candado si ya tiene valor guardado
         document.querySelectorAll('.row-input[data-field="hora"]').forEach(input => {
-            if (input.value && !input.disabled) {
+            if (input.value && input.value !== '--:--' && !input.disabled) {
                 input.setAttribute('readonly', true);
                 if (!input.parentElement.querySelector('.hora-lock')) {
                     const lock = document.createElement('span');
@@ -1824,7 +1824,7 @@ const App = {
             const isDisabled = d > daysInMonth && d !== 0;
             const rowClass = d === 0 ? 'initial-row-cell' : '';
 
-            html += `<div class="sheet-cell ${rowClass} ${d > daysInMonth ? 'disabled-day' : ''}">${d}</div>`;
+            html += `<div class="sheet-cell ${rowClass} ${d > daysInMonth ? 'disabled-day' : ''}" style="grid-column:1">${d}</div>`;
             html += `<div class="sheet-cell ${rowClass}"><input type="text" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isDisabled ? 'disabled' : ''}></div>`;
             ['p1182_entrada', 'entrada_dif', 'salida_caudal_val', 'salida_caudal_dif', 'p1181', 'p1182', 'p1183', 'p1184', 'p1185', 'p1186', 'p1180'].forEach(f => {
                 html += `<div class="sheet-cell ${rowClass}"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="${f}" value="${log[f] || ''}" ${isDisabled ? 'disabled' : ''}></div>`;
@@ -1863,7 +1863,7 @@ const App = {
             const log = logs.find(l => l.fecha === dateStr) || {};
             const isDisabled = d > daysInMonth && d !== 0;
             const rowClass = d === 0 ? 'initial-row-cell' : '';
-            html += `<div class="sheet-cell ${rowClass} ${d > daysInMonth ? 'disabled-day' : ''}">${d}</div>`;
+            html += `<div class="sheet-cell ${rowClass} ${d > daysInMonth ? 'disabled-day' : ''}" style="grid-column:1">${d}</div>`;
             html += `<div class="sheet-cell ${rowClass}"><input type="text" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isDisabled ? 'disabled' : ''}></div>`;
             ['p1581', 'p1582', 'p1583', 'p1584', 'p1585', 'p1586', 'p1580', 'p1161', 'p1162', 'p1163', 'p1164', 'p1165', 'p1166', 'p1160'].forEach(f => {
                 html += `<div class="sheet-cell ${rowClass}"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="${f}" value="${log[f] || ''}" ${isDisabled ? 'disabled' : ''}></div>`;
