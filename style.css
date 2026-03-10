@@ -675,9 +675,9 @@ header {
     border: 2px solid #000;
 }
 
-/* EDAR BOTOS HORAS: 21 columns for Hoja 2, 3, 4 (added 15px spacer at start) */
+/* EDAR BOTOS HORAS: 20 columns for Hoja 2, 3, 4 (DIA + HORA + 9 equipos × 2) */
 .sheet-table.botos-horas {
-    grid-template-columns: 20px 95px 60px 20px repeat(18, 75px);
+    grid-template-columns: 45px 75px repeat(18, minmax(65px, 1fr));
     background-color: #000;
     gap: 1px;
     border: 2px solid #000;

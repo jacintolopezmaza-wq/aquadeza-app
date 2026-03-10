@@ -868,58 +868,37 @@ const App = {
         const equipment = [
             { id: 'mono', label: 'BOMBA MONO' }, { id: 'poli', label: 'POLIELECTROLITO' },
             { id: 'agit', label: 'AGITADOR' }, { id: 'banda', label: 'FILTRO BANDA' },
-            { id: 'v1', label: '' }, { id: 'v2', label: '' }, { id: 'v3', label: '' }, { id: 'v4', label: '' }, { id: 'v5', label: '' }
+            { id: 'v1', label: 'V1' }, { id: 'v2', label: 'V2' }, { id: 'v3', label: 'V3' }, { id: 'v4', label: 'V4' }, { id: 'v5', label: 'V5' }
         ];
 
         let html = `<div class="sheet-table botos-horas">
-            <div class="sheet-cell sheet-header-cell span-row-2"></div>
-            <div class="sheet-cell sheet-header-cell span-row-2">FECHA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>
-            <div class="sheet-cell sheet-header-cell span-row-2"></div>`; // Separador vertical
-        equipment.forEach(e => { html += `<div class="sheet-cell sheet-header-cell span-col-2">${e.label || '-'}</div>`; });
+            <div class="sheet-cell sheet-header-cell span-row-2">DIA</div>
+            <div class="sheet-cell sheet-header-cell span-row-2">HORA</div>`;
+        equipment.forEach(e => { html += `<div class="sheet-cell sheet-header-cell span-col-2">${e.label}</div>`; });
         html += equipment.map(() => `<div class="sheet-cell sheet-header-cell">LECTURA</div><div class="sheet-cell sheet-header-cell">H.</div>`).join('');
 
         const monthKey = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}`;
-        const initialLog = logs.find(l => l.fecha === `${monthKey}-00`) || {};
-
-        // Blank horizontal row
-        for (let i = 0; i < 22; i++) html += `<div class="sheet-cell"></div>`;
-
-        // Initial Row (Day 00)
-        html += `<div class="sheet-cell initial-row-cell">-</div>`;
-        html += `<div class="sheet-cell date-cell">
-            <input type="text" class="row-input" data-date="${monthKey}-00" data-field="h4_fecha_manual" value="${initialLog.h4_fecha_manual || ''}" placeholder="INICIAL" >
-        </div>`;
-        html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${monthKey}-00" data-field="hora" value="${initialLog.hora || ''}" ></div>`;
-        html += `<div class="sheet-cell"></div>`; // Separador vertical
-        equipment.forEach(e => {
-            html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${monthKey}-00" data-field="h4_${e.id}_l" value="${initialLog['h4_' + e.id + '_l'] || ''}" ></div>`;
-            html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${monthKey}-00" data-field="h4_${e.id}_h" value="${initialLog['h4_' + e.id + '_h'] || ''}" ></div>`;
-        });
-
         const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
-        for (let d = 1; d <= 31; d++) {
-            const dateStr = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+
+        for (let d = 0; d <= 31; d++) {
+            const dateStr = `${monthKey}-${String(d).padStart(2, '0')}`;
             const log = logs.find(l => l.fecha === dateStr) || {};
             const isInvalidDay = d > daysInMonth;
+            const isInitial = d === 0;
 
-            html += `<div class="sheet-cell"></div>`;
-            html += `<div class="sheet-cell date-cell ${isInvalidDay ? 'disabled-row' : ''}">
-                <input type="text" class="row-input" data-date="${dateStr}" data-field="h4_fecha_manual" value="${log.h4_fecha_manual || ''}" placeholder="" ${isInvalidDay ? 'disabled' : ''}>
-            </div>`;
+            html += `<div class="sheet-cell ${isInitial ? 'initial-row-cell' : ''} ${isInvalidDay ? 'disabled-day' : ''}" style="grid-column:1">${d}</div>`;
             html += `<div class="sheet-cell"><input type="time" class="row-input" data-date="${dateStr}" data-field="hora" value="${log.hora || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
-            html += `<div class="sheet-cell"></div>`; // Separador vertical
             equipment.forEach(e => {
                 html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="h4_${e.id}_l" value="${log['h4_' + e.id + '_l'] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
                 html += `<div class="sheet-cell"><input type="number" step="0.1" class="row-input" data-date="${dateStr}" data-field="h4_${e.id}_h" value="${log['h4_' + e.id + '_h'] || ''}" ${isInvalidDay ? 'disabled' : ''}></div>`;
             });
         }
 
-        html += `<div class="sheet-cell footer-cell span-col-4">TOTAL</div>`;
+        html += `<div class="sheet-cell footer-cell span-col-2">TOTAL</div>`;
         equipment.forEach(e => {
             html += `<div class="sheet-cell footer-cell" id="total-h4-${e.id}-l">-</div><div class="sheet-cell footer-cell" id="total-h4-${e.id}-h">-</div>`;
         });
-        html += `<div class="sheet-cell footer-cell span-col-4">MEDIA</div>`;
+        html += `<div class="sheet-cell footer-cell span-col-2">MEDIA</div>`;
         equipment.forEach(e => {
             html += `<div class="sheet-cell footer-cell" id="media-h4-${e.id}-l">-</div><div class="sheet-cell footer-cell" id="media-h4-${e.id}-h">-</div>`;
         });
