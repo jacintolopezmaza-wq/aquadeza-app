@@ -2,12 +2,19 @@
 const App = {
     currentUser: null,
     currentStation: null,
+    currentMonth: new Date().getMonth(),
+    currentYear: new Date().getFullYear(),
     currentBotosTab: 'hoja1',
     currentBombeoBotosTab: 'hoja1',
     currentCatasosTab: 'hoja1',
     currentEtapTab: 'hoja1',
     currentCorredoiraTab: 'diario',
     currentVilatuxeTab: 'hoja1',
+    hasUnsavedChanges: false,
+    escapeHtml(str) {
+        if (!str) return '';
+        return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+    },
     generateYearOptions(selectedYear) {
         let html = '';
         for (let y = 2024; y <= 2050; y++) {
@@ -83,6 +90,19 @@ const App = {
         // Export Listeners
         document.getElementById('export-excel-btn').addEventListener('click', () => this.exportAllData('excel'));
         document.getElementById('export-pdf-btn').addEventListener('click', () => this.exportAllData('pdf'));
+
+        // Marcar cambios sin guardar cuando se escribe en cualquier input del formulario
+        document.getElementById('form-fields').addEventListener('input', () => {
+            this.hasUnsavedChanges = true;
+        });
+
+        // Bloquear cambio de usuario si hay datos sin guardar
+        document.getElementById('login-name').addEventListener('change', (e) => {
+            if (this.hasUnsavedChanges) {
+                alert("Hay datos sin guardar. Guarda antes de cambiar de operario.");
+                e.target.value = '';
+            }
+        });
     },
 
 
@@ -233,7 +253,7 @@ const App = {
     },
 
     renderEdarBotosSheet(container) {
-        if (!this.currentMonth) {
+        if (this.currentMonth === undefined || this.currentMonth === null) {
             const now = new Date();
             this.currentMonth = now.getMonth();
             this.currentYear = now.getFullYear();
@@ -305,7 +325,7 @@ const App = {
     },
 
     renderBombeoBotosSheet(container) {
-        if (!this.currentMonth) {
+        if (this.currentMonth === undefined || this.currentMonth === null) {
             const now = new Date();
             this.currentMonth = now.getMonth();
             this.currentYear = now.getFullYear();
@@ -478,7 +498,7 @@ const App = {
 
 
     renderCatasosSheet(container) {
-        if (!this.currentMonth) {
+        if (this.currentMonth === undefined || this.currentMonth === null) {
             const now = new Date();
             this.currentMonth = now.getMonth();
             this.currentYear = now.getFullYear();
@@ -710,7 +730,7 @@ const App = {
             <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${monthKey}-00" data-field="valle" value="${initialLog.valle || ''}" ></div>
             <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${monthKey}-00" data-field="llano" value="${initialLog.llano || ''}" ></div>
             <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${monthKey}-00" data-field="reactiva" value="${initialLog.reactiva || ''}" ></div>
-            <div class="sheet-cell"><input type="text" inputmode="text" class="row-input" data-date="${monthKey}-00" data-field="observaciones" value="${initialLog.observaciones || ''}" ></div>
+            <div class="sheet-cell"><input type="text" inputmode="text" class="row-input" data-date="${monthKey}-00" data-field="observaciones" value="${this.escapeHtml(initialLog.observaciones)}" ></div>
         `;
 
         const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
@@ -735,7 +755,7 @@ const App = {
                 <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${dateStr}" data-field="valle" value="${log.valle || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${dateStr}" data-field="llano" value="${log.llano || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${dateStr}" data-field="reactiva" value="${log.reactiva || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
-                <div class="sheet-cell"><input type="text" inputmode="text" class="row-input" data-date="${dateStr}" data-field="observaciones" value="${log.observaciones || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
+                <div class="sheet-cell"><input type="text" inputmode="text" class="row-input" data-date="${dateStr}" data-field="observaciones" value="${this.escapeHtml(log.observaciones)}" ${isInvalidDay ? 'disabled' : ''}></div>
         `;
         }
 
@@ -1046,6 +1066,20 @@ const App = {
                 this.recalculateTotals();
             };
         });
+
+        // Hora bloqueada: readonly + candado si ya tiene valor guardado
+        document.querySelectorAll('.row-input[data-field="hora"]').forEach(input => {
+            if (input.value && !input.disabled) {
+                input.setAttribute('readonly', true);
+                if (!input.parentElement.querySelector('.hora-lock')) {
+                    const lock = document.createElement('span');
+                    lock.className = 'hora-lock';
+                    lock.textContent = ' 🔒';
+                    lock.style.cssText = 'font-size:0.7rem; pointer-events:none;';
+                    input.parentElement.appendChild(lock);
+                }
+            }
+        });
     },
 
     recalculateDailyConsumption() {
@@ -1260,7 +1294,7 @@ const App = {
     },
 
     renderEdarCorredoiraSheet(container) {
-        if (!this.currentMonth) {
+        if (this.currentMonth === undefined || this.currentMonth === null) {
             const now = new Date();
             this.currentMonth = now.getMonth();
             this.currentYear = now.getFullYear();
@@ -1388,7 +1422,7 @@ const App = {
             <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${monthKey}-00" data-field="cons_valle" value="${initialLog.cons_valle || ''}" ></div>
             <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${monthKey}-00" data-field="cons_llano" value="${initialLog.cons_llano || ''}" ></div>
             <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${monthKey}-00" data-field="reactiva" value="${initialLog.reactiva || ''}" ></div>
-            <div class="sheet-cell"><input type="text" class="row-input" data-date="${monthKey}-00" data-field="observaciones" value="${initialLog.observaciones || ''}" ></div>
+            <div class="sheet-cell"><input type="text" class="row-input" data-date="${monthKey}-00" data-field="observaciones" value="${this.escapeHtml(initialLog.observaciones)}" ></div>
         `;
 
         const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
@@ -1414,7 +1448,7 @@ const App = {
                 <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${dateStr}" data-field="cons_valle" value="${log.cons_valle || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${dateStr}" data-field="cons_llano" value="${log.cons_llano || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
                 <div class="sheet-cell"><input type="number" step="0.1" inputmode="decimal" class="row-input" data-date="${dateStr}" data-field="reactiva" value="${log.reactiva || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
-                <div class="sheet-cell"><input type="text" class="row-input" data-date="${dateStr}" data-field="observaciones" value="${log.observaciones || ''}" ${isInvalidDay ? 'disabled' : ''}></div>
+                <div class="sheet-cell"><input type="text" class="row-input" data-date="${dateStr}" data-field="observaciones" value="${this.escapeHtml(log.observaciones)}" ${isInvalidDay ? 'disabled' : ''}></div>
             `;
         }
 
@@ -1691,7 +1725,7 @@ const App = {
 
 
     renderEtapSheet(container) {
-        if (!this.currentMonth) {
+        if (this.currentMonth === undefined || this.currentMonth === null) {
             const now = new Date();
             this.currentMonth = now.getMonth();
             this.currentYear = now.getFullYear();
@@ -1999,6 +2033,7 @@ const App = {
                 }
             }
             alert('Mes completo guardado correctamente');
+            this.hasUnsavedChanges = false;
         } else {
             const formData = {
                 fecha: document.getElementById('form-date').value,
@@ -2027,12 +2062,13 @@ const App = {
 
             this.DataManager.saveEntry(this.currentStation, formData);
             alert('Datos guardados correctamente');
+            this.hasUnsavedChanges = false;
         }
         this.showView('dashboard');
     },
 
     renderVilatuxeSheet(container) {
-        if (!this.currentMonth) {
+        if (this.currentMonth === undefined || this.currentMonth === null) {
             const now = new Date();
             this.currentMonth = now.getMonth();
             this.currentYear = now.getFullYear();
